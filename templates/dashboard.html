@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<br>
+<br>
+<div id="app">
+    <v-app id="inspire">
+        <!-- contents -->
+        <div class="container">
+            <v-data-table :headers="headers" :items="transaction" class="elevation-1">
+
+            </v-data-table>
+        </div>
+
+
+        [[ transaction ]]
+
+    </v-app>
+</div>
+
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data: {
+            transaction: [],
+            headers: [
+                {
+                    text: 'ListToDo',
+                    value: 'todo'
+                },
+                {
+                    text: 'User',
+                    value: 'user'
+                },
+                {
+                    text: 'Date',
+                    value: 'date'
+                },
+                {
+                    text: 'Time',
+                    value: 'time'
+                }
+            ],
+        },
+        // ทำงานเมื่อโหลดหน้าขึ้นมา
+        created() {
+            this.initialize(); //เข้าไปเรียกใช้ฟังก์ชั่น initialize ใน methods
+        },
+        methods: {
+            initialize() {
+                const path = '/api/table';
+                axios.get(path) //ยิงรีเควสไปถามเวิร์ฟเวอร์ 
+                    .then((res) => {
+                        this.transaction = res.data; //เรียกข้อมูล data ในหน้า blackend มาแสดงที่หน้า fontend
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    })
+            }
+        },
+        delimiters: ["[[", "]]"]
+    })
+
+
+</script>
+
+
+
+
+{% endblock %}

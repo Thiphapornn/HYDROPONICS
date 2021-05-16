@@ -1,0 +1,8 @@
+venv
+.vscode
+__pycache__
+.gitattributes
+.idea
+.DS_Store
+config
+routers/__pycache__

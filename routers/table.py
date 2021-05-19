@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Path
+from fastapi import APIRouter, Body, Path, HTTPException
 from firebase_db import db
 from typing import Optional
 from datetime import time
@@ -43,8 +43,11 @@ def table_get():
 
 @router.post('/table') #post บันทึกข้อมูล
 def table_post(payload: Optional[dict] = Body(None)):
-    data.append(payload)
-    return payload
+    try:
+        data.append(payload)
+        return payload
+    except:
+        raise HTTPException(status_code=400, detail='object not invalid')
 
 @router.put('/table/{id}') #put อัพเดทข้อมูล {ใส่ pathด้านหลัง มาใช้เป็นตัวแปร}
 def table_update(

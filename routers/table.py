@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Body, Path, HTTPException
-from firebase_db import db
+# from firebase_db import db
 from typing import Optional
 from datetime import time
 from pydantic import BaseModel

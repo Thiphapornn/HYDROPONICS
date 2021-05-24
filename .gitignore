@@ -6,3 +6,4 @@ __pycache__
 .DS_Store
 config
 routers/__pycache__
+firebase_db.py

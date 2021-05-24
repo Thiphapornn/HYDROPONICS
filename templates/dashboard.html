@@ -4,116 +4,58 @@
 <div id="app">
     <v-app id="inspire">
         <!-- contents -->
-        <v-container>
 
+
+        <div style="font-family: 'Varela Round', sans-serif;
+        font-family: 'Kanit', sans-serif;">
             <template>
-                <div>
-                    <v-app-bar color="light-green accent-3" dense>
-                        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                <v-app-bar color="#fa5457">
+                    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                    <v-avatar>
+                        <img src="static/images/2.png" alt="logo">
+                    </v-avatar> &nbsp;&nbsp;
+                    <v-toolbar-title>Hydroponics IoT</v-toolbar-title>
 
-                        <v-toolbar-title>Page title</v-toolbar-title>
+                    <v-spacer></v-spacer>
 
-                        <v-spacer></v-spacer>
+                    <div class="text-center">
+                        <v-chip class="ma-2" pill>
+                            <v-avatar left>
+                                <img src="static/images/cat.jpg" alt="cat">
+                            </v-avatar>
+                            Thiphaporn
+                        </v-chip>
+                    </div>
 
-                        <v-btn icon>
-                            <v-icon>mdi-heart</v-icon>
-                        </v-btn>
-
-                        <v-btn icon>
-                            <v-icon>mdi-magnify</v-icon>
-                        </v-btn>
-
-                        <v-menu left bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn icon v-bind="attrs" v-on="on">
-                                    <v-icon>mdi-dots-vertical</v-icon>
-                                </v-btn>
+                    <v-btn icon>
+                        <v-badge color="yellow">
+                            <template v-slot:badge>
+                                <span>!</span>
                             </template>
+                            <v-icon>mdi-bell</v-icon>
+                        </v-badge>
+                    </v-btn>
 
-                            <v-list>
-                                <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-                                    <v-list-item-title>Option {{ n }}</v-list-item-title>
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
-                    </v-app-bar>
-                </div>
+                    <v-menu left bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn icon v-bind="attrs" v-on="on">
+                                <v-icon>mdi-dots-vertical</v-icon>
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item v-for="n in 5" :key="n" @click="() => {}">
+                                <v-list-item-title>Option {{ n }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </v-app-bar>
+
             </template>
 
-            <v-container>
-                <v-data-table :headers="headers" :items="transaction" class="elevation-1" :search="search">
-                    <template v-slot:top>
-                        <v-toolbar flat color="#01b4bc">
 
-                            <v-toolbar-title>
-                                <v-icon color="light-green accent-3" dark large>mdi-sprout</v-icon>&nbsp;&nbsp;
-                                Hydroponics
-                            </v-toolbar-title>
 
-                            <v-divider class=mx-4 inset vertical></v-divider>
-                            <v-dialog persistent v-model="dialogTable" max-width="500px">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn color="#fa8925" class="mx-2" v-bind="attrs" v-on="on">
-                                        <v-icon>
-                                            mdi-plus-circle
-                                        </v-icon> &nbsp;
-                                        ADD
-                                    </v-btn>
-                                </template>
 
-                                <v-card>
-                                    <v-img height=150px src="/static/images/hydro.jpg"></v-img>
-                                    <v-card-title>
-                                        <span class="headline">
-                                            <v-icon>mdi-file-document-edit-outline</v-icon>[[ formTitle ]]
-                                        </span>
-                                    </v-card-title>
-
-                                    <v-card-text>
-                                        <v-container>
-                                            <v-row>
-                                                <v-col cols="12">
-                                                    <v-textarea name="input-7-1" label="List To Do"
-                                                        hint="Enter your List To Do" v-model="editedItem.todo">
-                                                    </v-textarea>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
-                                    </v-card-text>
-
-                                    <v-card-actions style="margin-top: -30px;">
-                                        <v-spacer></v-spacer>
-                                        <v-btn color="red" text @click="close">
-                                            <v-icon>mdi-close-circle</v-icon>&nbsp;
-                                            Cancle
-                                        </v-btn>
-                                        <v-btn color="blue" text @click="save">
-                                            <v-icon>mdi-checkbox-marked-circle</v-icon>&nbsp;
-                                            Save
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
-
-                            <v-spacer></v-spacer>
-
-                            <v-text-field v-model="search" clearable flat solo-inverted hide-details
-                                prepend-inner-icon="mdi-magnify" label="Search"></v-text-field>
-
-                        </v-toolbar>
-                    </template>
-
-                    <template v-slot:Item.actions="{ item }">
-                        <v-icon color="success" dark medium class="mr-2" @click="editItem(item)">
-                            mdi-pencil-circle-outline
-                        </v-icon>
-                        <v-icon color="red" dark medium>
-                            mdi-delete-circle-outline
-                        </v-icon>
-                    </template>
-
-                </v-data-table>
-            </v-container>
 
             <div class="text-center">
                 <v-snackbar bottom text absolute rounded="pill" v-model="snackbarCreate" :timeout="timeout"
@@ -135,8 +77,104 @@
                 </v-snackbar>
             </div>
 
-        </v-container>
 
+            <v-row no-gutters>
+                <v-col cols="12" md="5">
+                    <v-card class="pa-2" outlined tile>
+                        <v-row no-gutters>
+                            <v-card class="pa-2" outlined tile>
+
+                            </v-card>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-card class="pa-2" outlined tile>
+
+                            </v-card>
+                        </v-row>
+                    </v-card>
+                </v-col>
+                <v-col cols="12" md="7">
+                    <v-card class="pa-2" outlined tile>
+                        <v-data-table :headers="headers" :items="transaction" class="elevation-1" :search="search">
+                            <template v-slot:top>
+                                <v-toolbar flat color="#fa8925">
+
+                                    <v-toolbar-title>
+                                        <v-icon color="light-green accent-3" dark large>mdi-sprout</v-icon>&nbsp;&nbsp;
+                                        Hydroponics
+                                    </v-toolbar-title>
+
+                                    <v-divider class=mx-4 inset vertical></v-divider>
+                                    <v-dialog persistent v-model="dialogTable" max-width="500px">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn color="#f6d51f" class="mx-2" v-bind="attrs" v-on="on">
+                                                <v-icon>
+                                                    mdi-plus-circle
+                                                </v-icon> &nbsp;
+                                                เพิ่มข้อมูล
+                                            </v-btn>
+                                        </template>
+
+                                        <v-card>
+                                            <v-img height=150px src="/static/images/hydro.jpg"></v-img>
+                                            <v-card-title>
+                                                <span class="headline">
+                                                    <v-icon>mdi-file-document-edit-outline</v-icon>[[ formTitle ]]
+                                                </span>
+                                            </v-card-title>
+
+                                            <v-card-text>
+                                                <v-container>
+                                                    <v-row>
+                                                        <v-col cols="12">
+                                                            <v-textarea name="input-7-1" label="เพิ่มข้อมูล"
+                                                                hint="ยืนยันการบันทึก" v-model="editedItem.todo">
+                                                            </v-textarea>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-container>
+                                            </v-card-text>
+
+                                            <v-card-actions style="margin-top: -30px;">
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="red" text @click="close">
+                                                    <v-icon>mdi-close-circle</v-icon>&nbsp;
+                                                    ยกเลิก
+                                                </v-btn>
+                                                <v-btn color="blue" text @click="save">
+                                                    <v-icon>mdi-checkbox-marked-circle</v-icon>&nbsp;
+                                                    บันทึก
+                                                </v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+
+                                    <v-spacer></v-spacer>
+
+                                    <v-text-field v-model="search" clearable flat solo-inverted hide-details
+                                        prepend-inner-icon="mdi-magnify" label="ค้นหา"></v-text-field>
+
+                                </v-toolbar>
+                            </template>
+
+                            <template v-slot:Item.actions="{ item }">
+                                <div style="margin-top: 20px; margin-bottom: 20px;">
+                                    <v-icon color="success" dark medium class="mr-2" @click="editItem(item)">
+                                        mdi-pencil-circle-outline
+                                    </v-icon>
+                                    <v-icon color="red" dark medium>
+                                        mdi-delete-circle-outline
+                                    </v-icon>
+                                </div>
+                            </template>
+
+                        </v-data-table>
+                    </v-card>
+                </v-col>
+
+            </v-row>
+
+        </div>
 
 
     </v-app>
@@ -161,23 +199,23 @@
             spinTable: false,
             headers: [
                 {
-                    text: 'ListToDo',
+                    text: 'รายการ',
                     value: 'todo'
                 },
                 {
-                    text: 'User',
+                    text: 'ชื่อผู้ใช้',
                     value: 'user'
                 },
                 {
-                    text: 'Date',
+                    text: 'วัน/เดือน/ปี',
                     value: 'date'
                 },
                 {
-                    text: 'Time',
+                    text: 'เวลา',
                     value: 'time'
                 },
                 {
-                    text: 'Actions',
+                    text: 'แก้ไข/ลบ',
                     value: 'actions'
                 }
             ],
@@ -203,7 +241,7 @@
         },
         computed: {
             formTitle() {
-                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+                return this.editedIndex === -1 ? 'เพิ่มข้อมูล' : 'แก้ไขข้อมูล'
             }
         },
         methods: {

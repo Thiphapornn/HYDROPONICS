@@ -1,47 +1,51 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<br>
-<br>
 <div id="app">
     <v-app id="inspire">
         <!-- contents -->
         <v-container>
+
             <v-data-table :headers="headers" :items="transaction" class="elevation-1" :search="search">
                 <template v-slot:top>
-                    <v-toolbar flat color="yellow lighten-1">
+                    <v-toolbar flat color="light-blue darken-4" dark>
+                        
                         <v-toolbar-title>
-                            <v-icon>mdi-emoticon-cool-outline</v-icon>
+                            <v-icon color="light-green accent-3" dark large>mdi-sprout</v-icon>&nbsp;&nbsp;
                             Hydroponics
                         </v-toolbar-title>
+
                         <v-divider class=mx-4 inset vertical></v-divider>
-                        <v-dialog v-model="dialogTable" max-width="500px">
+                        <v-dialog persistent v-model="dialogTable" max-width="500px">
                             <template v-slot:activator="{ on, attrs }">
-                                <v-btn color="orange darken-1" class="mx-2" v-bind="attrs" v-on="on">
-                                    <v-icon dark>
-                                        mdi-plus
-                                    </v-icon>
+                                <v-btn color="orange darken-4" dark class="mx-2" v-bind="attrs" v-on="on">
+                                    <v-icon>
+                                        mdi-plus-circle
+                                    </v-icon> &nbsp;
                                     ADD
                                 </v-btn>
                             </template>
+
                             <v-card>
-                                <v-img height=150px src="/static/images/hydro.jpg">
-                                </v-img>
+                                <v-img height=150px src="/static/images/hydro.jpg"></v-img>
                                 <v-card-title>
-                                    <span class="headline"><v-icon>mdi-file-document-edit-outline</v-icon>ADD</span>
+                                    <span class="headline">
+                                        <v-icon>mdi-file-document-edit-outline</v-icon>[[ formTitle ]]
+                                    </span>
                                 </v-card-title>
+
                                 <v-card-text>
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12">
                                                 <v-textarea name="input-7-1" label="List To Do"
                                                     hint="Enter your List To Do" v-model="editedItem.todo">
-
                                                 </v-textarea>
                                             </v-col>
                                         </v-row>
                                     </v-container>
                                 </v-card-text>
+                                
                                 <v-card-actions style="margin-top: -30px;">
                                     <v-spacer></v-spacer>
                                     <v-btn color="red" text @click="close">
@@ -55,14 +59,46 @@
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
+
                         <v-spacer></v-spacer>
-                        <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
-                            hide-details>
-                        </v-text-field>
+
+                        <v-text-field v-model="search" clearable flat solo-inverted hide-details
+                            prepend-inner-icon="mdi-magnify" label="Search"></v-text-field>
 
                     </v-toolbar>
                 </template>
+                
+                <template v-slot:Item.actions="{ item }">
+                    <v-icon color="success" dark medium class="mr-2" @click="editItem(item)">
+                        mdi-pencil-circle-outline
+                    </v-icon>
+                    <v-icon color="red" dark medium>
+                        mdi-delete-circle-outline
+                    </v-icon>
+                </template>
+
             </v-data-table>
+
+            <div class="text-center">
+                <v-snackbar bottom text absolute rounded="pill" v-model="snackbarCreate" :timeout="timeout"
+                    color="success">
+                    [[ popup ]]
+                    <template v-slot:action="{ attrs }">
+                        <v-btn color="success" text v-bind="attrs" @click="snackbarCreate = false">
+                            Close
+                        </v-btn>
+                    </template>
+                </v-snackbar>
+                <v-snackbar bottom next absolute v-model="snackbarErr" :timeout="timeout" color="error">
+                    [[ popErr ]]
+                    <template v-slot:action="{ attrs }">
+                        <v-btn color="error" text v-bind="attrs" @click="snackbarErr = false">
+                            Close
+                        </v-btn>
+                    </template>
+                </v-snackbar>
+            </div>
+
         </v-container>
 
 
@@ -79,8 +115,14 @@
         data: {
             search: '',
             transaction: [],
+            snackbarErr: false,
             dialogTable: false,
             resData: null,
+            snackbarCreate: false,
+            timeout: 2000,
+            popup: '',
+            popErr: 'Create item someting wrong!',
+            spinTable: false,
             headers: [
                 {
                     text: 'ListToDo',
@@ -97,15 +139,21 @@
                 {
                     text: 'Time',
                     value: 'time'
+                },
+                {
+                    text: 'Actions',
+                    value: 'actions'
                 }
             ],
             editedItem: {
+                id: '',
                 todo: '',
                 user: '',
                 date: '',
                 time: '',
             },
             defaultItem: {
+                id: '',
                 todo: '',
                 user: '',
                 date: '',
@@ -117,40 +165,79 @@
         created() {
             this.initialize(); //เข้าไปเรียกใช้ฟังก์ชั่น initialize ใน methods
         },
+        computed: {
+            formTitle() {
+                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+            }
+        },
         methods: {
             initialize() {
                 const path = '/api/table';
                 axios.get(path) //ยิงรีเควสไปถามเวิร์ฟเวอร์ 
                     .then((res) => {
                         this.transaction = res.data; //เรียกข้อมูล data ในหน้า blackend มาแสดงที่หน้า fontend
+                        this.spinTable = true;
                     })
                     .catch((err) => {
                         console.error(err);
                     })
             },
-            pushTransaction(data) {
+            async pushTransaction(data) {
                 const path = '/api/table';
-                axios.post(path, data)
+                await axios.post(path, data)
                     .then((res) => {
-                        this.resData = res.data;
-                        console.log(this.resData);
+                        this.transaction.unshift(res.data);
+                        this.popup = 'created item success'
+                        this.snackbarCreate = true;
                     })
                     .catch((err) => {
-                        console.log(err)
+                        snackbarErr = true;
+                        console.log(err);
                     })
             },
+
+            async editTransaction(data, id) {
+                const path = '/api/table/${id}`';
+                await axios.put(path, data)
+                    .then((res) => {
+                        console.log(res.data);
+                        this.popup = 'updated item success';
+                    })
+                    .catch((err) => {
+                        this.snackbarErr = true;
+                        console.log(err);
+                    })
+            },
+
+
+
             close() {
-                this.dialogTable = false
+                this.dialogTable = false;
                 this.$nextTick(() => {
                     this.editedItem = Object.assign({}, this.defaultItem)
                     this.editedIndex = -1
                 })
             },
-            save() {
-                this.pushTransaction(this.editedItem);
-                this.transaction.push(this.editedItem);
+            async save() {
+                if (this.editedIndex > -1) {
+                    let data = Object.assign(this.transaction[this.editedIndex], this.editedItem);
+                    console.log(data, data.id);
+                }
+                else {
+                    await this.pushTransaction(this.editedItem);
+                }
                 this.close();
             },
+            async editItem(item) {
+                this.editedIndex = this.transaction.indexOf(item);
+                this.editedItem = Object.assign({}, item)
+                this.dialogTable = true;
+            },
+
+            async deleteItem(item) {
+
+            },
+
         },
         delimiters: ["[[", "]]"],
     })

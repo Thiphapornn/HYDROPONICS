@@ -2,26 +2,32 @@ from fastapi import APIRouter, Body, Path, HTTPException
 from firebase_db import db
 from typing import Optional
 from datetime import time
+from pydantic import BaseModel
 import datetime
+import uuid
+
 
 router = APIRouter()
 
-_d = datetime.datetime.now()
+
 
 data =[
     {
+        'id': 42152,
         'user': 'A',
         'date': '13/02/2018',
         'time': '15:30:15',
         'todo': 'ผักโต'
     },
     {
+        'id': 52453,
         'user': 'B',
         'date': '23/02/2018',
         'time': '12:12:12',
         'todo': 'ผักสวยงาม'
     },
     {
+        'id': 54353,
         'user': 'C',
         'date': '01/03/2018',
         'time': '14:22:11',
@@ -29,37 +35,51 @@ data =[
     }
 ]
 
-#data = [
-#    {
-#        'datetime': _d.strftime('%d/%m/%y'),
-#        'time': _d.strftime('%H:%M:%S')
-#    }
-#]
 
+
+class Item(BaseModel): #รับข้อมูลมาจากหน้าบ้าน
+    user: Optional[str] = None
+    date: Optional[str] = None
+    time: Optional[str] = None
+    todo: Optional[str] = None
+
+    
 
 @router.get('/table') #get เรัยกข้อมูลมาดู
-def table_get():
-    return data
+async def table_get():
+    return data[::-1] #เอาข้อมูลล่าสุด
 
-@router.post('/table') #post บันทึกข้อมูล
-def table_post(payload: Optional[dict] = Body(None)):
+@router.post('/table', status_code=201) #post บันทึกข้อมูล
+async def table_post(item: Item):
     try:
-        data.append(payload)
-        return payload
+        key = uuid.uuid4().hex
+        _d = datetime.datetime.now()
+        item = item.dict()
+        item["date"] = _d.strftime("%d/%m/%y")
+        item["time"] = _d.strftime("%H:%M:%S")
+        item["id"] = key
+        print(item)
+        data.append(item)
+        return item
     except:
-        raise HTTPException(status_code=400, detail='object not invalid')
+        raise HTTPException(status_code=400, detail='someting weng wrong!')
 
 @router.put('/table/{id}') #put อัพเดทข้อมูล {ใส่ pathด้านหลัง มาใช้เป็นตัวแปร}
-def table_update(
-    id: Optional[str] = Path(None),
-    payload: Optional[dict] = Body(None)):
+async def table_update(
+    item: Item,
+    id: Optional[str] = Path(None)
+):
+    payload = item.dict()
+    _d = datetime.datetime.now()
     for i in data:
         if i['id'] == id:
-            i['name'] = payload['name']
+            i['todo'] = payload['todo']
+            i['date'] = _d.strftime("%d/%m/%y")
+            i['time'] = _d.strftime("%H:%M:%S")
             return i
 
 @router.delete('/table/{id}') #delete ลบข้อมูล
-def table_delete(id: Optional[str] = Path(None)):
+async def table_delete(id: Optional[str] = Path(None)):
     id = int(id) - 1
     data.pop(int(id))
     return data

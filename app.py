@@ -20,6 +20,9 @@ def index():
     return 'Hello'
 
 
+@app.get('/login')
+def index(request: Request):
+    return template.TemplateResponse('login.html', context={'request': request})
 
 @app.get('/dashboard')
 def index(request: Request):

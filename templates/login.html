@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<br>
+<br>
+<div id="app">
+    <v-app id="inspire">
+        <!-- contents -->
+
+        <v-container>
+            <div style="font-family: 'Varela Round', sans-serif;
+        font-family: 'Kanit', sans-serif;">
+
+                <template>
+                    <v-card elevation="2">
+                        <v-toolbar flat color="#01b4bc"></v-toolbar>
+                        <v-row no-gutters>
+                            <v-col cols="12" md="6">
+                                <v-card>
+
+                                    <!-- <v-img max-height="530" max-width="530" src="static/images/1.jpg">
+                                    </v-img> -->
+
+                                    <v-img max-height="600" max-width="600" src="static/images/3.jpg">
+                                    </v-img>
+
+                                </v-card>
+                            </v-col>
+
+                            <v-col cols="12" md="6">
+                                <v-card>
+
+                                    <div class="text-center">
+                                        <v-row no-gutters>
+                                            &nbsp;
+                                            <v-col cols="12" md="12">
+                                                <v-avatar size="100">
+                                                    <img src="static/images/2.png" alt="logo">
+                                                </v-avatar>
+                                                <h2>Hydroponics IoT</h2>
+                                            </v-col>
+
+                                            <v-col cols="12" md="12">
+                                                <v-tabs centered>
+                                                    <v-tab>
+                                                        <h5>ลงชื่อเข้าใช้</h5>
+                                                    </v-tab>
+                                                    <v-tab>
+                                                        <h5>สมัครใช้งาน</h5>
+                                                    </v-tab>
+                                                </v-tabs>
+                                            </v-col>
+
+                                            <!-- <v-col cols="12" md="2"></v-col>
+                                            <v-col cols="12" md="8">
+                                                &nbsp;&nbsp;&nbsp;
+                                                <div class="text-center">
+                                                    <v-text-field label="E-mail" required></v-text-field>
+                                                    <v-text-field label="Normal with hint text" counter></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" md="2"></v-col>
+
+                                            &nbsp;&nbsp;&nbsp;
+                                            <v-col cols="12" md="12">
+                                                <v-btn rounded color="#f6d51f" large dark>
+                                                    <h6>เข้าสู่ระบบ</h6>
+                                                </v-btn>
+
+                                                <v-btn rounded color="red" large dark>
+                                                    <h6>ยกเลิก</h6>
+                                                </v-btn>
+
+                                                <v-btn rounded color="#5fa55a" large dark>
+                                                    <h6>ลืมรหัสผ่าน</h6>
+                                                </v-btn>
+                                            </v-col>
+
+                                            &nbsp;&nbsp;&nbsp; -->
+
+                                            <v-col cols="12" md="2"></v-col>
+                                            <v-col cols="12" md="8">
+                                                &nbsp;&nbsp;&nbsp;
+                                                <div class="text-center">
+                                                    <v-text-field label="Regular"></v-text-field>
+                                                    <v-text-field label="E-mail" required></v-text-field>
+                                                    <v-text-field label="Password"></v-text-field>
+                                                    <v-text-field label="Password"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" md="2"></v-col>
+
+                                            &nbsp;&nbsp;&nbsp;
+                                            <v-col cols="12" md="12">
+                                                <v-btn rounded color="#01b4bc" large dark>
+                                                    <h6>สมัคร</h6>
+                                                </v-btn>
+
+                                                <v-btn rounded color="red" large dark>
+                                                    <h6>ยกเลิก</h6>
+                                                </v-btn>
+                                            </v-col>
+
+                                            &nbsp;&nbsp;&nbsp;
+
+                                        </v-row>
+                                    </div>
+
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </template>
+
+            </div>
+        </v-container>
+
+    </v-app>
+</div>
+
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data: {}
+    })
+
+
+</script>
+
+
+
+
+{% endblock %}

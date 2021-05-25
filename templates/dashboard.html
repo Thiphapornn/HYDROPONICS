@@ -96,7 +96,7 @@
                                             <span class="white--text headline">62</span>
                                         </v-avatar>
                                         &nbsp;
-                                        <h3>แสง</h3>
+                                        <h4>แสง</h4>
                                     </div>
                                 </v-card>
                             </v-col>
@@ -108,7 +108,7 @@
                                             <span class="white--text headline">62</span>
                                         </v-avatar>
                                         &nbsp;
-                                        <h3>อุณหภูมิ</h3>
+                                        <h4>อุณหภูมิ</h4>
                                     </div>
                                 </v-card>
                             </v-col>
@@ -120,7 +120,7 @@
                                             <span class="white--text headline">62</span>
                                         </v-avatar>
                                         &nbsp;
-                                        <h3>ความชื้น</h3>
+                                        <h4>ความชื้น</h4>
                                     </div>
                                 </v-card>
                             </v-col>
@@ -132,7 +132,7 @@
                                             <span class="white--text headline">62</span>
                                         </v-avatar>
                                         &nbsp;
-                                        <h3>น้ำ</h3>
+                                        <h4>น้ำ</h4>
                                     </div>
                                 </v-card>
                             </v-col>
@@ -151,9 +151,77 @@
                             </v-toolbar-title>
                         </v-toolbar>
 
-                        <v-row no-gutters>
+                        &nbsp;
+                        <div class="text-center">
+                            <v-row no-gutters>
+                                <v-col cols="12" md="6">
+                                    <h4>ไฟ 1</h4>
+                                </v-col>
+                                <v-col cols="12" md="6">
+                                    <v-btn rounded color="blue" large dark>
+                                        เปิด
+                                    </v-btn>
 
-                        </v-row>
+                                    <v-btn rounded color="red" large dark>
+                                        ปิด
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+                        </div>
+
+                        &nbsp;
+                        <div class="text-center">
+                            <v-row no-gutters>
+                                <v-col cols="12" md="6">
+                                    <h4>ไฟ 2</h4>
+                                </v-col>
+                                <v-col cols="12" md="6">
+                                    <v-btn rounded color="blue" large dark>
+                                        เปิด
+                                    </v-btn>
+
+                                    <v-btn rounded color="red" large dark>
+                                        ปิด
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+                        </div>
+
+                        &nbsp;
+                        <div class="text-center">
+                            <v-row no-gutters>
+                                <v-col cols="12" md="6">
+                                    <h4>น้ำ</h4>
+                                </v-col>
+                                <v-col cols="12" md="6">
+                                    <v-btn rounded color="blue" large dark>
+                                        เปิด
+                                    </v-btn>
+
+                                    <v-btn rounded color="red" large dark>
+                                        ปิด
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+                        </div>
+
+                        &nbsp;
+                        <div class="text-center">
+                            <v-row no-gutters>
+                                <v-col cols="12" md="6">
+                                    <h4>ละอองน้ำ</h4>
+                                </v-col>
+                                <v-col cols="12" md="6">
+                                    <v-btn rounded color="blue" large dark>
+                                        เปิด
+                                    </v-btn>
+
+                                    <v-btn rounded color="red" large dark>
+                                        ปิด
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+                        </div>
 
                     </v-card>
                 </v-col>
@@ -245,32 +313,10 @@
                                         mdi-pencil-circle
                                     </v-icon>
 
-                                    <template>
-                                        <v-dialog v-model="dialogDelete" persistent max-width="290">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-icon color="red" dark medium class="mr-2" @click="deleteItem(item)">
-                                                    mdi-delete-circle
-                                                </v-icon>
-                                            </template>
-                                            <v-card>
-                                                <v-card-title class="headline">
-                                                    ลบข้อมูล
-                                                </v-card-title>
-                                                <v-card-text>
-                                                    คุณแน่ใจว่าจะลบข้อมูลหรือไม่
-                                                </v-card-text>
-                                                <v-card-actions>
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn color="green darken-1" text @click="dialog = false">
-                                                        ยกเลิก
-                                                    </v-btn>
-                                                    <v-btn color="green darken-1" text @click="dialog = false">
-                                                        ลบข้อมูล
-                                                    </v-btn>
-                                                </v-card-actions>
-                                            </v-card>
-                                        </v-dialog>
-                                    </template>
+                                    <v-icon color="red" dark medium>
+                                        mdi-delete-circle
+                                    </v-icon>
+
 
 
                                 </div>
@@ -299,7 +345,6 @@
             transaction: [],
             snackbarErr: false,
             dialogTable: false,
-            dialogDelete: false,
             resData: null,
             snackbarCreate: false,
             timeout: 2000,
@@ -397,17 +442,6 @@
                     })
             },
 
-            async deleteTransaction(data, id) {
-                const path = '/api/table/${id}`';
-                await axios.delete(path, data)
-                    .then((res) => {
-                        console.log(res.data);
-                    })
-                    .catch((err) => {
-                        this.snackbarErr = true;
-                        console.log(err);
-                    })
-            },
 
             close() {
                 this.dialogTable = false;
@@ -452,8 +486,7 @@
             },
 
             async deleteItem(item) {
-                this.$store.dispatch("deleteItem", item);
-                this.dialogDelete = true;
+
             },
 
         },

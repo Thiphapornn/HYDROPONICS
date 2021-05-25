@@ -27,6 +27,13 @@ def index(request: Request):
 
 
 
+@app.get('/aaa')
+def index(request: Request):
+    return template.TemplateResponse('aaa.html', context={'request': request})
+    
+
+
+
 
 if __name__ == '__main__':
     uvicorn.run('app:app', debug=True, port=8080)

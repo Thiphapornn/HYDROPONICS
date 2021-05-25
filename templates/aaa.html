@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<br>
+<br>
+<div id="app">
+    <v-app id="inspire">
+        <!-- contents -->
+        <v-container>
+            <v-data-table :headers="headers" :items="transaction" class="elevation-1" :search="search">
+                <template v-slot:header.product="{ header }">
+                   <h6>product</h6>
+                </template>
+                <template v-slot:Item.name="{ item }">
+                    <strong> [[ item.name ]] </strong>
+                </template>
+
+                <template v-slot:Item.actions="{ item }">
+                    <div style="margin-top: 20px; margin-bottom: 20px;">
+                        <v-icon color="success" dark medium>
+                            mdi-pencil-circle-outline
+                        </v-icon>
+                        <v-icon color="red" dark medium>
+                            mdi-delete-circle-outline
+                        </v-icon>
+                    </div>
+                </template>
+
+            </v-data-table>
+        </v-container>
+    </v-app>
+</div>
+
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data: {
+            search: '',
+            transaction: [],
+            spinTable: false,
+            headers: [
+                {
+                    text: 'Tag',
+                    value: 'tag'
+                },
+                {
+                    text: 'User Info',
+                    value: 'name'
+                },
+                {
+                    text: 'Product',
+                    value: 'product'
+                },
+                {
+                    text: 'Tel',
+                    value: 'tel'
+                },
+                {
+                    text: 'Actions',
+                    value: 'actions'
+                },
+            ]
+        },
+
+        created() {
+            this.aaa();
+        },
+
+        methods: {
+            aaa() {
+                const path = 'https://m-bussiness-bot.herokuapp.com/information/table';
+                axios.get(path)
+                    .then((res) => {
+                        this.transaction = res.data;
+                        this.spinTable = true;
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    })
+            }
+        },
+        delimiters: ["[[", "]]"],
+
+    })
+
+
+</script>
+
+
+
+
+{% endblock %}

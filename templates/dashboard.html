@@ -54,9 +54,6 @@
             </template>
 
 
-
-
-
             <div class="text-center">
                 <v-snackbar bottom text absolute rounded="pill" v-model="snackbarCreate" :timeout="timeout"
                     color="success">
@@ -157,6 +154,22 @@
                                 </v-toolbar>
                             </template>
 
+                            <template v-slot:header.todo="{ header }">
+                                <h6>รายการ</h6>
+                            </template>
+                            <template v-slot:header.user="{ header }">
+                                <h6>ชื่อผู้ใช้</h6>
+                            </template>
+                            <template v-slot:header.date="{ header }">
+                                <h6>วัน/เดือน/ปี</h6>
+                            </template>
+                            <template v-slot:header.time="{ header }">
+                                <h6>เวลา</h6>
+                            </template>
+                            <template v-slot:header.actions="{ header }">
+                                <h6>แก้ไข/ลบ</h6>
+                            </template>
+
                             <template v-slot:Item.actions="{ item }">
                                 <div style="margin-top: 20px; margin-bottom: 20px;">
                                     <v-icon color="success" dark medium class="mr-2" @click="editItem(item)">
@@ -200,23 +213,28 @@
             headers: [
                 {
                     text: 'รายการ',
-                    value: 'todo'
+                    value: 'todo',
+                    align: 'center',
                 },
                 {
                     text: 'ชื่อผู้ใช้',
-                    value: 'user'
+                    value: 'user',
+                    align: 'center',
                 },
                 {
                     text: 'วัน/เดือน/ปี',
-                    value: 'date'
+                    value: 'date',
+                    align: 'center',
                 },
                 {
                     text: 'เวลา',
-                    value: 'time'
+                    value: 'time',
+                    align: 'center',
                 },
                 {
                     text: 'แก้ไข/ลบ',
-                    value: 'actions'
+                    value: 'actions',
+                    align: 'center',
                 }
             ],
             editedItem: {
@@ -246,7 +264,7 @@
         },
         methods: {
             initialize() {
-                const path = '/api/table';
+                const path = 'api/table';
                 axios.get(path) //ยิงรีเควสไปถามเวิร์ฟเวอร์ 
                     .then((res) => {
                         this.transaction = res.data; //เรียกข้อมูล data ในหน้า blackend มาแสดงที่หน้า fontend

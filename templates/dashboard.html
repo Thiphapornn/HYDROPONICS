@@ -79,9 +79,55 @@
                 <v-col cols="12" md="5">
                     <v-card class="pa-2" outlined tile>
                         <v-row no-gutters>
-                            <v-card class="pa-2" outlined tile>
 
-                            </v-card>
+                            <v-col cols="12" md="3">
+                                <v-card class="pa-2" outlined tile>
+                                    <div class="text-center">
+                                        <v-avatar color="#fa8925" size="130">
+                                            <span class="white--text headline">62</span>
+                                        </v-avatar>
+                                        &nbsp;
+                                        <h3>แสง</h3>
+                                    </div>
+                                </v-card>
+                            </v-col>
+
+                            <v-col cols="12" md="3">
+                                <v-card class="pa-2" outlined tile>
+                                    <div class="text-center">
+                                        <v-avatar color="#f6d51f" size="130">
+                                            <span class="white--text headline">62</span>
+                                        </v-avatar>
+                                        &nbsp;
+                                        <h3>อุณหภูมิ</h3>
+                                    </div>
+                                </v-card>
+                            </v-col>
+                            
+                            <v-col cols="12" md="3">
+                                <v-card class="pa-2" outlined tile>
+                                    <div class="text-center">
+                                        <v-avatar color="#5fa55a" size="130">
+                                            <span class="white--text headline">62</span>
+                                        </v-avatar>
+                                        &nbsp;
+                                        <h3>ความชื้น</h3>
+                                    </div>
+                                </v-card>
+                            </v-col>
+
+                            <v-col cols="12" md="3">
+                                <v-card class="pa-2" outlined tile>
+                                    <div class="text-center">
+                                        <v-avatar color="#01b4bc" size="130">
+                                            <span class="white--text headline">62</span>
+                                        </v-avatar>
+                                        &nbsp;
+                                        <h3>น้ำ</h3>
+                                    </div>
+                                </v-card>
+                            </v-col>
+
                         </v-row>
                         <v-row no-gutters>
                             <v-card class="pa-2" outlined tile>
@@ -92,7 +138,8 @@
                 </v-col>
                 <v-col cols="12" md="7">
                     <v-card class="pa-2" outlined tile>
-                        <v-data-table multi-sort :headers="headers" :items="transaction" class="elevation-1" :search="search">
+                        <v-data-table multi-sort :headers="headers" :items="transaction" class="elevation-1"
+                            :search="search">
                             <template v-slot:top>
                                 <v-toolbar flat color="#fa8925">
 
@@ -146,6 +193,7 @@
                                         </v-card>
                                     </v-dialog>
 
+
                                     <v-spacer></v-spacer>
 
                                     <v-text-field v-model="search" clearable flat solo-inverted hide-details
@@ -153,7 +201,7 @@
 
                                 </v-toolbar>
                             </template>
-                            
+
                             <template v-slot:header.todo="{ header }">
                                 <h6>รายการ</h6>
                             </template>
@@ -175,9 +223,35 @@
                                     <v-icon color="success" dark medium class="mr-2" @click="editItem(item)">
                                         mdi-pencil-circle
                                     </v-icon>
-                                    <v-icon color="red" dark medium>
-                                        mdi-delete-circle
-                                    </v-icon>
+
+                                    <template>
+                                        <v-dialog v-model="dialogDelete" persistent max-width="290">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-icon color="red" dark medium class="mr-2" @click="deleteItem(item)">
+                                                    mdi-delete-circle
+                                                </v-icon>
+                                            </template>
+                                            <v-card>
+                                                <v-card-title class="headline">
+                                                    ลบข้อมูล
+                                                </v-card-title>
+                                                <v-card-text>
+                                                    คุณแน่ใจว่าจะลบข้อมูลหรือไม่
+                                                </v-card-text>
+                                                <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn color="green darken-1" text @click="dialog = false">
+                                                        ยกเลิก
+                                                    </v-btn>
+                                                    <v-btn color="green darken-1" text @click="dialog = false">
+                                                        ลบข้อมูล
+                                                    </v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
+                                    </template>
+
+
                                 </div>
                             </template>
 
@@ -204,6 +278,7 @@
             transaction: [],
             snackbarErr: false,
             dialogTable: false,
+            dialogDelete: false,
             resData: null,
             snackbarCreate: false,
             timeout: 2000,
@@ -301,7 +376,17 @@
                     })
             },
 
-
+            async deleteTransaction(data, id) {
+                const path = '/api/table/${id}`';
+                await axios.delete(path, data)
+                    .then((res) => {
+                        console.log(res.data);
+                    })
+                    .catch((err) => {
+                        this.snackbarErr = true;
+                        console.log(err);
+                    })
+            },
 
             close() {
                 this.dialogTable = false;
@@ -320,6 +405,25 @@
                 }
                 this.close();
             },
+
+            close() {
+                this.dialogTable = false;
+                this.$nextTick(() => {
+                    this.editedItem = Object.assign({}, this.defaultItem)
+                    this.editedIndex = -1
+                })
+            },
+            async save() {
+                if (this.editedIndex > -1) {
+                    let data = Object.assign(this.transaction[this.editedIndex], this.editedItem);
+                    console.log(data, data.id);
+                }
+                else {
+                    await this.pushTransaction(this.editedItem);
+                }
+                this.close();
+            },
+
             async editItem(item) {
                 this.editedIndex = this.transaction.indexOf(item);
                 this.editedItem = Object.assign({}, item)
@@ -327,7 +431,8 @@
             },
 
             async deleteItem(item) {
-
+                this.$store.dispatch("deleteItem", item);
+                this.dialogDelete = true;
             },
 
         },

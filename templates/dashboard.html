@@ -153,7 +153,7 @@
 
                                 </v-toolbar>
                             </template>
-
+                            
                             <template v-slot:header.todo="{ header }">
                                 <h6>รายการ</h6>
                             </template>
@@ -173,10 +173,10 @@
                             <template v-slot:Item.actions="{ item }">
                                 <div style="margin-top: 20px; margin-bottom: 20px;">
                                     <v-icon color="success" dark medium class="mr-2" @click="editItem(item)">
-                                        mdi-pencil-circle-outline
+                                        mdi-pencil-circle
                                     </v-icon>
                                     <v-icon color="red" dark medium>
-                                        mdi-delete-circle-outline
+                                        mdi-delete-circle
                                     </v-icon>
                                 </div>
                             </template>

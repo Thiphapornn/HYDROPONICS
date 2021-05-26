@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from routers import table, secure, esp
+from routers import table, secure, esp, callback
 from fastapi.responses import RedirectResponse
 from routers.secure import auth
 import time
@@ -34,6 +34,12 @@ app.include_router(
     responses={418: {"description": "I'm a teapot"}},
 )
 
+app.include_router(
+    callback.router,
+    prefix='/callback',
+    tags=['callback'],
+    responses={418: {"description": "I'm a teapot"}},
+)
 
 @app.get("/dashboard")
 async def dashboard(request: Request):

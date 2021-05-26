@@ -7,3 +7,5 @@ __pycache__
 config
 routers/__pycache__
 firebase_db.py
+auth/firebase.py
+auth/token_firebase.py

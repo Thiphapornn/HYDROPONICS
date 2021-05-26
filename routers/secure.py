@@ -1,28 +1,43 @@
-from urllib.parse import scheme_chars
+
 from fastapi import APIRouter, Form, Request, UploadFile, File, Response
-from fastapi.exceptions import HTTPException
-from pyasn1_modules.rfc2459 import DisplayText
 from pydantic import BaseModel
 from typing import Optional
-from pydantic.tools import T
-
-from pyrebase.pyrebase import Auth
 from starlette import responses
-from auth.firebase import Config_firebase
-from firebase_admin import auth
+from firebase_admin import auth, credentials
 import json
 import firebase_admin
-from firebase_admin import credentials
 import pyrebase
 import os
 from datetime import timedelta
 from fastapi.responses import RedirectResponse
-from auth.token_firebase import set_authentication, set_firebase
 
-# with open('auth/firebase.json', 'r') as json_file:
-#     load_json = json.load(json_file)
-#     database = load_json['firebase']
-#     authen = load_json['credential']
+import os
+
+set_firebase = {
+    "apiKey": os.environ['apiKey'],
+    "authDomain": os.environ['authDomain'],
+    "projectId": os.environ['projectId'],
+    "databaseURL": os.environ['databaseURL'],
+    "storageBucket": os.environ['storageBucket'],
+    "messagingSenderId": os.environ['messagingSenderId'],
+    "appId": os.environ['appId'],
+    "measurementId": os.environ['measurementId'],
+    "databaseURL": os.environ['databaseURL']
+
+}
+
+set_authentication = {
+    "type": os.environ['type'],
+    "project_id": os.environ['project_id'],
+    "private_key_id": os.environ['private_key_id'],
+    "private_key": os.environ['private_key'].replace("\\n", "\n"),
+    "client_email": os.environ['client_email'],
+    "client_id": os.environ['client_id'],
+    "auth_uri": os.environ['auth_uri'],
+    "token_uri": os.environ['token_uri'],
+    "auth_provider_x509_cert_url": os.environ['auth_provider_x500_cert_url'],
+    "client_x509_cert_url": os.environ['client_x509_cert_url']
+}
 
 auth_file = credentials.Certificate(set_authentication)
 firebase_admin.initialize_app(auth_file)

@@ -38,7 +38,19 @@ set_authentication = {
     "auth_provider_x509_cert_url": os.environ['auth_provider_x509_cert_url'],
     "client_x509_cert_url": os.environ['client_x509_cert_url']
 }
+# with open('tam.json', 'r') as json_file:
+#     set_authentication = json.load(json_file)
 
+# set_firebase = {
+#     "apiKey": "AIzaSyDe5jMDh7VnKnYS4CZ_zVT-6qmvpDtyJF4",
+#     "authDomain": "tamja-a01a4.firebaseapp.com",
+#     "databaseURL": "https://tamja-a01a4.firebaseio.com",
+#     "projectId": "tamja-a01a4",
+#     "storageBucket": "tamja-a01a4.appspot.com",
+#     "messagingSenderId": "1024091619298",
+#     "appId": "1:1024091619298:web:613e29af40a24abdf1c3bb",
+#     "measurementId": "G-H7RNK8HTKW"
+# }
 
 class Config_firebase:
     def __init__(self, path_db, path_auth):
@@ -50,11 +62,17 @@ class Config_firebase:
         firebase = self.path_db
         pb = pyrebase.initialize_app(firebase).auth()
         return pb
+    def database_fb(self):
+        firebase = self.path_db
+        config = pyrebase.initialize_app(firebase)
+        db = config.database()
+        return db
+
 
 
 config = Config_firebase(path_db=set_firebase, path_auth=set_authentication)
 pb = config.authentication()
-
+db = config.database_fb()
 
 @router.post('/register')
 async def register(

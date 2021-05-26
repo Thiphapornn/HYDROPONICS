@@ -70,10 +70,10 @@ async def register(
         username: str = Form(...)
 ):
     host = request.url.hostname
-    scheme =request.url.scheme
+    scheme = request.url.scheme
     port = request.url.port
     filename = file.filename
-    http = f'{scheme}://{host}:{port}/static/uploads/{filename}'
+    http = 'https://hydroponics-iot.herokuapp.com/static/uploads/{filename}'
     user = auth.create_user(
         email=email,
         password=password,

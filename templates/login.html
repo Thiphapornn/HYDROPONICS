@@ -263,16 +263,23 @@
                         .then((res) => {
                   
                             if (res.data.status === true)
+                            {
+                                this.spinBtn = true
                                 window.location = res.data.url;
-                            else
+                            }
+                               
+                            else{
+                                this.spinBtn = true
                                 Swal.fire({
                                     icon: 'error',
                                     title: '',
                                     text: 'กรุณายืนยันอีเมล์ของคุณ'
                                 })
-
+                            }
+                                
                         })
                         .catch((err) => {
+                            this.spinBtn = true
                             Swal.fire({
                                 icon: 'error',
                                 title: '',

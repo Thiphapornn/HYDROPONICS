@@ -1,6 +1,7 @@
+from _typeshed import ReadableBuffer
 from fastapi import APIRouter, Request, HTTPException, Body
 from fastapi import APIRouter, Request, HTTPException, Body
-from typing import Optional
+from typing import Optional, Text
 from linebot import LineBotApi, WebhookHandler, WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import StickerSendMessage, TextSendMessage, TextMessage, MessageEvent
@@ -92,9 +93,25 @@ def event_handler(events):
 
 def event_postback(events):
     postback = events['postback']
+    replyToken = events['replyToken']
+    userId = events['source']['userId']
     relay = postback['data']
     fb.child('smartFarm').child('relay').set({'relays': int(relay)})
-
+    relay = int(relay)
+    package_id = '6136'
+    sticker_id = randint(10551376, 10551399)
+    if relay == 3 or relay == 5:
+        line_bot_api.reply_message(replyToken, TextSendMessage(text='เปิดไฟแล้วจ้า'))
+        line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))
+    elif relay == 4 or relay == 6:
+         line_bot_api.reply_message(replyToken, TextSendMessage(text='ปิดไฟแล้วจ้า'))
+         line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))
+    elif relay == 10 or relay == 8:
+        line_bot_api.reply_message(replyToken, TextSendMessage(text='เปิดแล้วจ้า'))
+        line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))
+    elif relay == 9 or relay == 7:
+        line_bot_api.reply_message(replyToken, TextSendMessage(text='ปิดแล้วจ้า'))
+        line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))
 
 @handler.add(MessageEvent, message=TextMessage)
 def handler_message(event):

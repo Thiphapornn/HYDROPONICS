@@ -10,7 +10,6 @@ import pyrebase
 import os
 from datetime import timedelta
 from fastapi.responses import RedirectResponse
-
 import os
 
 router = APIRouter()
@@ -70,18 +69,20 @@ async def register(
         username: str = Form(...)
 ):
     filename = file.filename
-    http = f'https://hydroponics-iot.herokuapp.com/static/{filename}'
+    upload_dir = os.path.join('static', 'uploads')
+    file_input = os.path.join(upload_dir, file.filename)
+    http = f'https://hydroponics-iot.herokuapp.com/static/uploads/{filename}'
     user = auth.create_user(
         email=email,
         password=password,
         display_name=username,
         photo_url=http
     )
-    static_file = 'f/static/uploads/{file.filename}'
-    with open(static_file, 'wb+') as upload_file:
-        upload_file.write(file.file.read())
-        upload_file.close()
-    return {'user': user}
+    if file:
+        with open(file_input, 'wb+') as upload_file:
+            upload_file.write(file.file.read())
+            upload_file.close()
+    return {'user': 'ijf'}
 
 
 

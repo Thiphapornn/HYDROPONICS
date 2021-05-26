@@ -70,7 +70,7 @@ async def register(
         username: str = Form(...)
 ):
     filename = file.filename
-    http = 'https://hydroponics-iot.herokuapp.com/static/uploads/{filename}'
+    http = f'https://hydroponics-iot.herokuapp.com/static/uploads/{filename}'
     user = auth.create_user(
         email=email,
         password=password,

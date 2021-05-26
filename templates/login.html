@@ -209,8 +209,15 @@
             textAlert: '',
             spinBtn: true,
         },
+        created(){
+            liff.init({liffId: '1656033485-XQmZxaba'}, () => {
+                if (liff.isLoggedIn()) {
+                } else {
+                    liff.login();
+                }
+            }, err => console.error(err.code, error.message));
+        },
         methods: {
-
             register() {
                 let form = this.$refs.form.validate();
                 this.spinBtn = false

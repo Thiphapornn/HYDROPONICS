@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from routers import table, secure, esp, callback
+# from routers import callback, secure
 from fastapi.responses import RedirectResponse
 from routers.secure import auth
 import time
@@ -41,22 +42,22 @@ app.include_router(
     responses={418: {"description": "I'm a teapot"}},
 )
 
-@app.get("/dashboard")
-async def dashboard(request: Request):
-    token = request.cookies.get('access-token')
-    if not token:
-        return RedirectResponse(url='/root_login')
-    if token:
-        try:
-            check_session = auth.verify_session_cookie(token)
-            auth.revoke_refresh_tokens(check_session['sub'])
-            # pusher_client.trigger('secure', 'session', check_session)
-            return template.TemplateResponse('dashboard.html', context={'request': request})
-        except auth.RevokedSessionCookieError:
-            return RedirectResponse(url='/root_login')
-        except auth.InvalidSessionCookieError:
-            return RedirectResponse(url='/root_login')
-    return template.TemplateResponse("dashboard.html", context={"request": request})
+# @app.get("/dashboard")
+# async def dashboard(request: Request):
+#     token = request.cookies.get('access-token')
+#     if not token:
+#         return RedirectResponse(url='/root_login')
+#     if token:
+#         try:
+#             check_session = auth.verify_session_cookie(token)
+#             auth.revoke_refresh_tokens(check_session['sub'])
+#             # pusher_client.trigger('secure', 'session', check_session)
+#             return template.TemplateResponse('dashboard.html', context={'request': request})
+#         except auth.RevokedSessionCookieError:
+#             return RedirectResponse(url='/root_login')
+#         except auth.InvalidSessionCookieError:
+#             return RedirectResponse(url='/root_login')
+#     return template.TemplateResponse("dashboard.html", context={"request": request})
 
 
 

@@ -1,6 +1,7 @@
 from linebot.models import (FlexSendMessage)
 
 
+
 def flex_iot():
     flex_msg = FlexSendMessage(
         alt_text='Control IoT',

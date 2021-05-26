@@ -15,11 +15,11 @@ fb = db
 db = MongoDB(database_name='dashboard', uri='mongodb://127.0.0.1:27017')
 collection = 'line_bot'
 
-# SECRET_LINE = 'e924540a14e6a9ea7b594f063d18d994'
-# ACCESS_TOKEN = 'wrMkegzd86hC66VHLi2p093mzNEIXR7RGh7H9ZQv7iElY5W6amsHqkeXhmqfxdYBi0fnSh5FifqHD0lS9D2SbCfxgZy6CJk3Y2e7iWA1BNPi/3BaN6llOk+ldGUCLwaCegax6tD/1dyLV9P5sVfwZAdB04t89/1O/w1cDnyilFU='
+SECRET_LINE = 'e924540a14e6a9ea7b594f063d18d994'
+ACCESS_TOKEN = 'wrMkegzd86hC66VHLi2p093mzNEIXR7RGh7H9ZQv7iElY5W6amsHqkeXhmqfxdYBi0fnSh5FifqHD0lS9D2SbCfxgZy6CJk3Y2e7iWA1BNPi/3BaN6llOk+ldGUCLwaCegax6tD/1dyLV9P5sVfwZAdB04t89/1O/w1cDnyilFU='
 
-SECRET_LINE = os.environ['SECRET_LINE']
-ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+# SECRET_LINE = os.environ['SECRET_LINE']
+# ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 router = APIRouter()
 
 line_bot_api = LineBotApi(ACCESS_TOKEN)
@@ -107,6 +107,6 @@ def handler_message(event):
                                                                                                    ref['temperature'],
                                                                                                    ref['level_water'],
                                                                                                    ref['lux'])
-        line_bot_api.reply_message(replyToken, TextSendMessage(text=message_text))
+        line_bot_api.reply_message(replyToken, TextSendMessage(text=text))
     if message_text == '@control':
         line_bot_api.reply_message(replyToken, flex_iot())

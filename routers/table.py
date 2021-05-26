@@ -12,10 +12,7 @@ router = APIRouter()
 
 var_mongodb = os.environ.get('MONGODB_URI')
 db = MongoDB(database_name='dashboard', uri=var_mongodb)
-# db = MongoDB(database_name='dashboard', uri='mongodb://127.0.0.1:27017')
 collection = 'users'
-
-
 
 
 class Item(BaseModel): #รับข้อมูลมาจากหน้าบ้าน

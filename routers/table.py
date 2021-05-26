@@ -1,39 +1,17 @@
 from fastapi import APIRouter, Body, Path, HTTPException
-# from firebase_db import db
 from typing import Optional
 from datetime import time
 from pydantic import BaseModel
 import datetime
-import uuid
-
+from db import MongoDB
+from object_str import CutId
+from bson import ObjectId
 
 router = APIRouter()
 
+db = MongoDB(database_name='dashboard', uri='mongodb://127.0.0.1:27017')
+collection = 'users'
 
-
-data =[
-    {
-        'id': 42152,
-        'user': 'A',
-        'date': '13/02/2018',
-        'time': '15:30:15',
-        'todo': 'ผักโต'
-    },
-    {
-        'id': 52453,
-        'user': 'B',
-        'date': '23/02/2018',
-        'time': '12:12:12',
-        'todo': 'ผักสวยงาม'
-    },
-    {
-        'id': 54353,
-        'user': 'C',
-        'date': '01/03/2018',
-        'time': '14:22:11',
-        'todo': 'ผักโตเต็มที่'
-    }
-]
 
 
 
@@ -47,19 +25,25 @@ class Item(BaseModel): #รับข้อมูลมาจากหน้า�
 
 @router.get('/table') #get เรัยกข้อมูลมาดู
 async def table_get():
+    data = db.find(collection=collection, query={})
+    data = list(data)
+    for k in data:
+        del k['_id']
     return data[::-1] #เอาข้อมูลล่าสุด
+
 
 @router.post('/table', status_code=201) #post บันทึกข้อมูล
 async def table_post(item: Item):
+    print(item)
     try:
-        key = uuid.uuid4().hex
-        _d = datetime.datetime.now()
+        key = CutId(_id=ObjectId()).dict()['id']
         item = item.dict()
+        _d = datetime.datetime.now()
         item["date"] = _d.strftime("%d/%m/%y")
         item["time"] = _d.strftime("%H:%M:%S")
         item["id"] = key
-        print(item)
-        data.append(item)
+        db.insert_one(collection=collection, data=item)
+        del item['_id']
         return item
     except:
         raise HTTPException(status_code=400, detail='someting weng wrong!')
@@ -71,15 +55,15 @@ async def table_update(
 ):
     payload = item.dict()
     _d = datetime.datetime.now()
-    for i in data:
-        if i['id'] == id:
-            i['todo'] = payload['todo']
-            i['date'] = _d.strftime("%d/%m/%y")
-            i['time'] = _d.strftime("%H:%M:%S")
-            return i
+    query = {'id': id}
+    payload['date'] = _d.strftime("%d/%m/%y")
+    payload['time'] = _d.strftime("%H:%M:%S")
+    values = {'$set': payload}
+    db.update_one(collection=collection, values=values, query=query)
+    return 'success'
+     
 
 @router.delete('/table/{id}') #delete ลบข้อมูล
 async def table_delete(id: Optional[str] = Path(None)):
-    id = int(id) - 1
-    data.pop(int(id))
-    return data
+    db.delete_one(collection=collection, query={'id': id})
+    return 

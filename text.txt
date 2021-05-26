@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<br>
+<br>
+<div id="app">
+    <v-app id="inspire">
+        <!-- contents -->
+
+        <v-container>
+            <div style="font-family: 'Varela Round', sans-serif;
+        font-family: 'Kanit', sans-serif;">
+
+                <template>
+                    <v-toolbar flat color="#01b4bc"></v-toolbar>
+                    <v-row no-gutters>
+                        <v-col cols="12" md="6">
+                            <v-card flat class="mx-auto">
+                                <v-carousel hide-delimiters>
+                                    <v-carousel-item v-for="(image,i) in images" :key="i" :src="image.src">
+                                        <div class="display-3">
+                                            {{ images }}
+                                        </div>
+                                    </v-carousel-item>
+                                </v-carousel>
+                            </v-card>
+                        </v-col>
+
+                        <v-col cols="12" md="6">
+                            <v-card flat class="mx-auto">
+
+                                <div class="text-center">
+                                    <v-row no-gutters>
+                                        &nbsp;
+                                        <v-col cols="12" md="12">
+                                            <v-avatar size="100">
+                                                <img src="static/images/2.png" alt="logo">
+                                            </v-avatar>
+                                            <h3>Hydroponics IoT</h3>
+                                        </v-col>
+
+                                        <v-col cols="12" md="12">
+
+                                            <v-tabs centered v-model=tabs>
+                                                <v-tab v-for="i in tabName">
+                                                    <h5>[[i]]</h5>
+                                                </v-tab>
+                                            </v-tabs>
+
+                                            <v-tabs-items v-model="tabs">
+                                                <v-tab-item>
+                                                    <v-card flat>
+                                                        <v-card-text>
+                                                            <v-container>
+                                                                <v-text-field label="อีเมล์" :rules="rules"
+                                                                    hide-details="auto">
+                                                                </v-text-field>
+                                                                <v-text-field v-model="password"
+                                                                    :rules="[rulespassword.required, rulespassword.min]"
+                                                                    :type="show ? 'text' : 'password'"
+                                                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                                                    label="รหัสผ่าน" hint="ใส่รหัสอย่างน้อย 8 อักขระ"
+                                                                    counter @click:append="show = !show"></v-text-field>
+
+                                                                <v-btn rounded color="#f6d51f" large dark>
+                                                                    <h6>เข้าสู่ระบบ</h6>
+                                                                </v-btn>
+
+                                                                <v-btn rounded color="red" large dark>
+                                                                    <h6>ยกเลิก</h6>
+                                                                </v-btn>
+
+                                                                <v-btn rounded color="#5fa55a" large dark>
+                                                                    <h6>ลืมรหัสผ่าน</h6>
+                                                                </v-btn>
+                                                            </v-container>
+                                                        </v-card-text>
+                                                    </v-card>
+                                                </v-tab-item>
+                                                <v-tab-item>
+                                                    <v-card flat>
+                                                        <v-card-text>
+                                                            <v-container>
+                                                                <v-text-field label="ชื่อผู้ใช้" :rules="rules"
+                                                                    hide-details="auto"></v-text-field>
+                                                                <v-text-field label="อีเมล์" :rules="rules"
+                                                                    hide-details="auto"></v-text-field>
+                                                                <v-text-field v-model="password"
+                                                                    :rules="[rulespassword.required, rulespassword.min]"
+                                                                    :type="show ? 'text' : 'password'"
+                                                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                                                    label="รหัสผ่าน" hint="ใส่รหัสอย่างน้อย 8 อักขระ"
+                                                                    counter @click:append="show = !show"></v-text-field>
+                                                                <v-text-field v-model="password"
+                                                                    :rules="[rulespassword.required, rulespassword.min]"
+                                                                    :type="show ? 'text' : 'password'"
+                                                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                                                    label="ยืนยันรหัสผ่าน"
+                                                                    hint="ใส่รหัสอย่างน้อย 8 อักขระ" counter
+                                                                    @click:append="show = !show"></v-text-field>
+                                                                <v-file-input :rules="rulesimage"
+                                                                    accept="image/png, image/jpeg, image/bmp"
+                                                                    prepend-icon="mdi-camera-plus"
+                                                                    label="อัพโหลดรูปโปรไฟล์">
+                                                                </v-file-input>
+                                                                <v-btn rounded color="#01b4bc" large dark>
+                                                                    <h6>สมัคร</h6>
+                                                                </v-btn>
+
+                                                                <v-btn rounded color="red" large dark>
+                                                                    <h6>ยกเลิก</h6>
+                                                                </v-btn>
+                                                            </v-container>
+                                                        </v-card-text>
+                                                    </v-card>
+                                                </v-tab-item>
+                                            </v-tabs-items>
+                                        </v-col>
+
+                                    </v-row>
+                                </div>
+
+                            </v-card>
+                        </v-col>
+                    </v-row>
+
+                </template>
+
+            </div>
+        </v-container>
+
+    </v-app>
+</div>
+
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data: {
+            rules: [
+                value => !!value || 'กรอกข้อมูล',
+                value => (value && value.length >= 3) || 'Min 3 characters',
+            ],
+            show: false,
+            password: '',
+            rulespassword: {
+                required: value => !!value || 'กรอกข้อมูล',
+                min: v => v.length >= 8 || 'Min 8 characters',
+                emailMatch: () => (`The email and password you entered don't match`),
+            },
+            rulesimage: [
+                value => !value || value.size < 2000000 || 'ขนาดรูปควรน้อยกว่า 2 MB!',
+            ],
+            tabs: null,
+            tabName: ["ลงชื่อเข้าใช้", "สมัครใช้งาน"],
+            images: [
+                { src: 'static/images/1.jpg' },
+                { src: 'static/images/3.jpg' },
+            ]
+        },
+        delimiters: ["[[", "]]"]
+    })
+
+
+</script>
+
+
+
+
+{% endblock %}

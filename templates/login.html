@@ -12,102 +12,147 @@
         font-family: 'Kanit', sans-serif;">
 
                 <template>
-                    <v-card elevation="2">
-                        <v-toolbar flat color="#01b4bc"></v-toolbar>
-                        <v-row no-gutters>
-                            <v-col cols="12" md="6">
-                                <v-card>
+                    <v-toolbar flat color="#01b4bc"></v-toolbar>
+                    <v-row no-gutters>
+                        <v-col cols="12" md="6">
+                            <v-card flat class="mx-auto">
+                                <v-carousel hide-delimiters>
+                                    <v-carousel-item v-for="(image,i) in images" :key="i" :src="image.src">
+                                        <div class="display-3">
+                                            {{ images }}
+                                        </div>
+                                    </v-carousel-item>
+                                </v-carousel>
+                            </v-card>
+                        </v-col>
 
-                                    <!-- <v-img max-height="530" max-width="530" src="static/images/1.jpg">
-                                    </v-img> -->
+                        <v-col cols="12" md="6">
+                            <v-card flat class="mx-auto">
 
-                                    <v-img max-height="600" max-width="600" src="static/images/3.jpg">
-                                    </v-img>
+                                <div class="text-center">
+                                    <v-row no-gutters>
+                                        &nbsp;
+                                        <v-col cols="12" md="12">
+                                            <v-avatar size="100">
+                                                <img src="static/images/2.png" alt="logo">
+                                            </v-avatar>
+                                            <h3>Hydroponics IoT</h3>
+                                        </v-col>
 
-                                </v-card>
-                            </v-col>
+                                        <v-col cols="12" md="12">
 
-                            <v-col cols="12" md="6">
-                                <v-card>
+                                            <v-tabs centered v-model=tabs>
+                                                <v-tab v-for="i in tabName">
+                                                    <h5>[[i]]</h5>
+                                                </v-tab>
+                                            </v-tabs>
 
-                                    <div class="text-center">
-                                        <v-row no-gutters>
-                                            &nbsp;
-                                            <v-col cols="12" md="12">
-                                                <v-avatar size="100">
-                                                    <img src="static/images/2.png" alt="logo">
-                                                </v-avatar>
-                                                <h2>Hydroponics IoT</h2>
-                                            </v-col>
+                                            <v-tabs-items v-model="tabs">
+                                                <v-tab-item>
+                                                    <v-card flat>
+                                                        <v-card-text>
+                                                            <v-container>
 
-                                            <v-col cols="12" md="12">
-                                                <v-tabs centered>
-                                                    <v-tab>
-                                                        <h5>ลงชื่อเข้าใช้</h5>
-                                                    </v-tab>
-                                                    <v-tab>
-                                                        <h5>สมัครใช้งาน</h5>
-                                                    </v-tab>
-                                                </v-tabs>
-                                            </v-col>
+                                                                <v-form v-model="validLogin" ref="formLogin"
+                                                                    lazy-validation>
 
-                                            <!-- <v-col cols="12" md="2"></v-col>
-                                            <v-col cols="12" md="8">
-                                                &nbsp;&nbsp;&nbsp;
-                                                <div class="text-center">
-                                                    <v-text-field label="E-mail" required></v-text-field>
-                                                    <v-text-field label="Normal with hint text" counter></v-text-field>
-                                            </v-col>
-                                            <v-col cols="12" md="2"></v-col>
+                                                                    <v-text-field v-model="emailLG" label="อีเมล์"
+                                                                        required :rules="rules">
+                                                                    </v-text-field>
 
-                                            &nbsp;&nbsp;&nbsp;
-                                            <v-col cols="12" md="12">
-                                                <v-btn rounded color="#f6d51f" large dark>
-                                                    <h6>เข้าสู่ระบบ</h6>
-                                                </v-btn>
+                                                                    <v-text-field v-model="passwordLG"
+                                                                        :rules="validPassword" label="รหัสผ่าน"
+                                                                        hint="ใส่รหัสอย่างน้อย 8 ตัว" counter
+                                                                        type="password">
+                                                                    </v-text-field>
 
-                                                <v-btn rounded color="red" large dark>
-                                                    <h6>ยกเลิก</h6>
-                                                </v-btn>
+                                                                    <v-btn @click="login" :loading="!spinBtn" rounded color="#5fa55a" large
+                                                                        dark>
+                                                                        <h6>เข้าสู่ระบบ</h6>
+                                                                    </v-btn>
 
-                                                <v-btn rounded color="#5fa55a" large dark>
-                                                    <h6>ลืมรหัสผ่าน</h6>
-                                                </v-btn>
-                                            </v-col>
+                                                                </v-form>
 
-                                            &nbsp;&nbsp;&nbsp; -->
+                                                            </v-container>
+                                                        </v-card-text>
+                                                    </v-card>
+                                                </v-tab-item>
 
-                                            <v-col cols="12" md="2"></v-col>
-                                            <v-col cols="12" md="8">
-                                                &nbsp;&nbsp;&nbsp;
-                                                <div class="text-center">
-                                                    <v-text-field label="Regular"></v-text-field>
-                                                    <v-text-field label="E-mail" required></v-text-field>
-                                                    <v-text-field label="Password"></v-text-field>
-                                                    <v-text-field label="Password"></v-text-field>
-                                            </v-col>
-                                            <v-col cols="12" md="2"></v-col>
+                                                <v-tab-item>
+                                                    <v-card flat>
+                                                        <v-card-text>
+                                                            <v-container>
+                                                                <v-form v-model="valid" ref="form" lazy-validation>
 
-                                            &nbsp;&nbsp;&nbsp;
-                                            <v-col cols="12" md="12">
-                                                <v-btn rounded color="#01b4bc" large dark>
-                                                    <h6>สมัคร</h6>
-                                                </v-btn>
+                                                                    <v-text-field v-model="fe.username"
+                                                                        label="ชื่อผู้ใช้" :rules="validOther" required
+                                                                        clearable>
+                                                                    </v-text-field>
 
-                                                <v-btn rounded color="red" large dark>
-                                                    <h6>ยกเลิก</h6>
-                                                </v-btn>
-                                            </v-col>
+                                                                    <v-text-field v-model="fe.email" label="อีเมล์"
+                                                                        required clearable :rules="rules">
+                                                                    </v-text-field>
 
-                                            &nbsp;&nbsp;&nbsp;
+                                                                    <v-text-field v-model="fe.password" label="รหัสผ่าน"
+                                                                        type="password" :rules="validPassword" required
+                                                                        clearable>
+                                                                    </v-text-field>
 
-                                        </v-row>
-                                    </div>
+                                                                    <v-file-input v-model="imgFile" :rules="rulesimage"
+                                                                        required
+                                                                        accept="image/png, image/jpeg, image/bmp"
+                                                                        prepend-icon="mdi-camera-plus"
+                                                                        label="อัพโหลดรูปโปรไฟล์">
+                                                                    </v-file-input>
 
-                                </v-card>
-                            </v-col>
-                        </v-row>
-                    </v-card>
+                                                                    <v-btn rounded color="#01b4bc" large dark :loading="!spinBtn"
+                                                                        :disabled="!valid" @click="register">
+                                                                        <h6>สมัคร</h6>
+                                                                    </v-btn>
+
+                                                                </v-form>
+                                                            </v-container>
+                                                        </v-card-text>
+                                                    </v-card>
+                                                </v-tab-item>
+
+                                                <v-tab-item>
+                                                    <v-card flat>
+                                                        <v-card-text>
+                                                            <v-container>
+
+                                                                <v-form v-model="validForgot" ref="formForgot"
+                                                                    lazy-validation>
+                                                                    <v-text-field v-model="forgotForm"
+                                                                        label="ลืมรหัสผ่าน" required clearable
+                                                                        :rules="rules">
+                                                                    </v-text-field>
+
+                                                                    <v-btn rounded color="#fa8925" large dark
+                                                                        @click="forGotPwd">
+                                                                        <h6>ลืมรหัสผ่าน</h6>
+                                                                    </v-btn>
+                                                                </v-form>
+
+
+                                                            </v-container>
+                                                        </v-card-text>
+                                                    </v-card>
+                                                </v-tab-item>
+
+                                            </v-tabs-items>
+
+
+
+                                        </v-col>
+
+                                    </v-row>
+                                </div>
+
+                            </v-card>
+                        </v-col>
+                    </v-row>
+
                 </template>
 
             </div>
@@ -122,7 +167,143 @@
     new Vue({
         el: '#app',
         vuetify: new Vuetify(),
-        data: {}
+        data: {
+            validPassword: [
+                v => !!v || 'กรุณากรอกรหัสผ่าน',
+                v => v && v.length >= 6 || 'กรุณากรอกอย่างน้อย 6 ตัว'
+            ],
+            validOther: [v => !!v || 'กรุณากรอก'],
+            rules: [
+                v => !!v || 'กรุณากรอกอีเมล์',
+                v => /.+@.+\..+/.test(v) || 'กรุณากรอกอีเมล์',
+            ],
+            rulesimage: [
+                value => !value || value.size < 2000000 || 'ขนาดรูปควรน้อยกว่า 2 MB!',
+            ],
+            images: [
+                { src: 'static/images/1.jpg' },
+                { src: 'static/images/3.jpg' },
+            ],
+            fe: {
+                email: '',
+                username: '',
+                password: '',
+            },
+
+            feDefault: {
+                email: '',
+                username: '',
+                password: '',
+            },
+           
+            emailLG: '',
+            passwordLG: '',
+            forgotForm: '',
+            tabs: null,
+            valid: false,
+            validForgot: false,
+            validLogin: false,
+            tabName: ["ลงชื่อเข้าใช้", "สมัครใช้งาน", "ลืมรหัสผ่าน"],
+            imgFile: null,
+            alertLogin: false,
+            textAlert: '',
+            spinBtn: true,
+        },
+        methods: {
+
+            register() {
+                let form = this.$refs.form.validate();
+                this.spinBtn = false
+                if (form === true) {
+                    console.log('success')
+                    let formData = new FormData();
+                    formData.append('file', this.imgFile);
+                    formData.append('email', this.fe.email);
+                    formData.append('username', this.fe.username);
+                    formData.append('password', this.fe.password);
+                    const path = '/secure/register';
+                    axios.post(path, formData)
+                        .then((res) => {
+                            this.spinBtn = true
+                            Swal.fire(
+                                'Good job!',
+                                'You clicked the button!',
+                                'success'
+                            ).then(() => {
+                                this.fe = Object.assign({}, this.feDefault);
+                                this.valid = false;
+                                this.tabs = 0
+                            })
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        })
+
+                }
+                else {
+                    console.log('error')
+                }
+            },
+            login() {
+                let form = this.$refs.formLogin.validate();
+                this.spinBtn = false
+                if (form === true) {
+                    let formData = new FormData();
+                    formData.append('email', this.emailLG)
+                    formData.append('password', this.passwordLG)
+                    const path = '/secure/login';
+                    axios.post(path, formData)
+                        .then((res) => {
+                  
+                            if (res.data.status === true)
+                                window.location = res.data.url;
+                            else
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '',
+                                    text: 'กรุณายืนยันอีเมล์ของคุณ'
+                                })
+
+                        })
+                        .catch((err) => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '',
+                                text: 'คุณกรอกอีเมล์หรือรหัสผ่านไม่ถูกต้อง'
+                            })
+                        })
+
+                }
+                else {
+                    console.log('error')
+                }
+            },
+            forGotPwd() {
+                let form = this.$refs.formForgot.validate();
+                if (form === true) {
+                    let formData = new FormData();
+                    formData.append('forgot', this.forgotForm)
+                    const path = '/secure/forgotpassword';
+                    axios.post(path, formData)
+                        .then((res) => {
+                            Swal.fire(
+                                'Good job!',
+                                'You clicked the button!',
+                                'success'
+                            )
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        })
+
+                }
+                else {
+                    console.log('error')
+                }
+            },
+        },
+
+        delimiters: ["[[", "]]"]
     })
 
 

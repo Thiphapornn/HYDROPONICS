@@ -1,0 +1,24 @@
+{
+    "firebase": {
+        "apiKey": "AIzaSyDe5jMDh7VnKnYS4CZ_zVT-6qmvpDtyJF4",
+        "authDomain": "tamja-a01a4.firebaseapp.com",
+        "databaseURL": "https://tamja-a01a4.firebaseio.com",
+        "projectId": "tamja-a01a4",
+        "storageBucket": "tamja-a01a4.appspot.com",
+        "messagingSenderId": "1024091619298",
+        "appId": "1:1024091619298:web:613e29af40a24abdf1c3bb",
+        "measurementId": "G-H7RNK8HTKW"
+    },
+    "credential": {
+        "type": "service_account",
+        "project_id": "tamja-a01a4",
+        "private_key_id": "2a1aaf8afbf2f8964dbc48160a49a1a19d48f995",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDLyHcmWFcQ6u2z\n8cljstAVoBdgZYvPOErP76NQ062FTpZ/wbsD43/14/kJ2Y5eGtC2Ifgm0CK/pCbW\n5W36wOeWvaOh3rWVQrh+rikhkoDohDpPrmu1w5JjBdPfGVsAS9CRHJszAXW3mBsm\nI/svF/NwpRWBSfd+A7+6s6N3YpdPo+eQzo35u1t1RsVuMVMUY+Vr2zSLV1YrZ0na\nDvJSUge/o7/Tkv6qUWYxH3k3IiskCXdfO6zfb1v33lcgc1kCGCAQRka0PN2LEzPo\nwSgPyM8tEpXe6Lcw6N3JQDSor61PJiYanCiHL+0bFkprLEDFQUKAYcwbzdn0ECnA\nD4M4cktRAgMBAAECggEACuHOLIzXPejYt5Ut3KJE6sG3O9tiWFcMhi75IvjhzVKH\ndoQuOCCBAdzKHMq6h7eRfYdh+rMexup1dUBwU32ThGUFOOC1ZEaJRwEGguOhmQEO\nItkI6Q57+cga8sEGLzVtOmGLX2F4o3ymtv5BBKhYFHPpWoOMWQUq2vXKsPZxp3PM\nIKS/15vM7Pf7gL5XMJPhDsdaTlawLcvMDxAlRKcLPgxgA5oKVx9Dw9HkCwaQH6c5\n5xPjkQQXFtAJRpLTDjMKU/FEHXOBIc5QiPGBmRzizIch21yxF03ba/eqcyMFP8vH\nGvhwHGJpQ8W7TlrUXjC89JDW+UZFlDAT1XtLA1I34QKBgQDuG7fmahwjdU4G4ZLR\nQGrqoGbaC99LUl4x3VQ1wBFZ9ME2AuLZgXN/d3rKb/Fx1EqV73dWgeYaDl8vIV7V\nclUbslBmtcE7yn7jGTPIp+FLHr/uPLfSltOFICWhEswrCpRY0Ku/QkxkTJ7e6RKA\nhh6vfvOeXDvsI+tAfzcd9M8UYQKBgQDbGHaDZidypWDXsjc3R/NRqEDazmXEeFfK\nSjm0TB269Q0wYx65TX0Z09n0Y/I/eXqsglIsMUv4CKPZEJQQNAevHgQ1Qt+aSV9j\n17zFPB3RQyV2JNK2RW0IBrStI2J49+u0hMxf5pMkNnGsB15tMEhU3tF7DeZO8Kum\nlkdw+TWc8QKBgQCkBEPxXDZ11mAhLVFNAuqjJEq0+GigIeTwxF01iVBqfsZ4xhQt\nb5Z3v3295M6Ucn/OOF4kIOa4HB5FAN+qeE9X/MSVe63X2ez90mZxWfM/I7diDEEz\ntuGNWk+RXLl3DJqTc2pbHPgyPvVQ54vvLHQGv5RhCXfdegCbNQZqhDABAQKBgQDK\npqPoAfL23fTnTZY48boji2cBe+sxgMZi+6jIFadiKAtc+DGQ4BWYcBWnMVL+VxSa\nv6fV7HsCHqu+uNDa8+Uvmqn1wbck9DzhEskt/d7ukhbyYjjsEuc4h0tS4enRTi+c\nN0D6a0EqO5mErwQuJnyg08Aa+85MsdtzKIlH+5oVYQKBgQDYQCTZLFsvBzpIDTn/\nuaXehy0k4RmNqzinBCdsrFKytdrmr3InqrhlB3X8S7uTcBK4g+oV8K+hMr/+K7uc\nPJNHgWq0yab3+1B0BWHx2hmLlUGje6kwWVUlF/1sAepdiFuaY6DT1fofkXcKeMZB\n0LB3QO92/xsa0eqCJBtaR/M49Q==\n-----END PRIVATE KEY-----\n",
+        "client_email": "firebase-adminsdk-u7e9d@tamja-a01a4.iam.gserviceaccount.com",
+        "client_id": "111205821770450617858",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-u7e9d%40tamja-a01a4.iam.gserviceaccount.com"
+    }
+}

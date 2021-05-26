@@ -84,7 +84,7 @@
                                 <v-card flat class="pa-2" outlined tile>
                                     <div class="text-center">
                                         <v-avatar color="#fa5457" size="130">
-                                            <span class="white--text headline">62</span>
+                                            <span class="white--text headline">[[dataSensor.lux]]</span>
                                         </v-avatar>
                                         &nbsp;
                                         <h4>แสง</h4>
@@ -96,7 +96,7 @@
                                 <v-card flat class="pa-2" outlined tile>
                                     <div class="text-center">
                                         <v-avatar color="#fa8925" size="130">
-                                            <span class="white--text headline">62</span>
+                                            <span class="white--text headline">[[dataSensor.temperature]]</span>
                                         </v-avatar>
                                         &nbsp;
                                         <h4>อุณหภูมิ</h4>
@@ -108,7 +108,7 @@
                                 <v-card flat class="pa-2" outlined tile>
                                     <div class="text-center">
                                         <v-avatar color="#5fa55a" size="130">
-                                            <span class="white--text headline">62</span>
+                                            <span class="white--text headline">[[dataSensor.humidity]]</span>
                                         </v-avatar>
                                         &nbsp;
                                         <h4>ความชื้น</h4>
@@ -120,7 +120,7 @@
                                 <v-card flat class="pa-2" outlined tile>
                                     <div class="text-center">
                                         <v-avatar color="#01b4bc" size="130">
-                                            <span class="white--text headline">62</span>
+                                            <span class="white--text headline">[[dataSensor.level_water]]</span>
                                         </v-avatar>
                                         &nbsp;
                                         <h4>น้ำ</h4>
@@ -333,7 +333,6 @@
                         </v-data-table>
                     </v-card>
                 </v-col>
-                [[auth]]
             </v-row>
 
         </div>
@@ -341,7 +340,6 @@
 
     </v-app>
 </div>
-
 
 <script>
 
@@ -405,38 +403,36 @@
             spinRelay: true,
             auth: null,
             relay: 0,
-            lux: 0,
-            humidity: 0,
-            temp: 0,
-            water: 0,
+            dataSensor: {}
         },
         // ทำงานเมื่อโหลดหน้าขึ้นมา
         created() {
             this.getUser();
             this.initialize(); //เข้าไปเรียกใช้ฟังก์ชั่น initialize ใน methods
-            this.sensors();
+            setInterval(
+                function(){
+                    this.sensors();
+                }.bind(this), 3000);
+
         },
         computed: {
             formTitle() {
                 return this.editedIndex === -1 ? 'เพิ่มข้อมูล' : 'แก้ไขข้อมูล'
             }
+
         },
         methods: {
             sensors() {
                 const path = '/esp/sensor';
-                setInterval(function () {
-                    axios.get(path)
-                        .then((res) => {
-                            this.lux = res.data.lux
-                            this.water = res.data.level_water
-                            this.temp = res.data.temperature
-                            this.humidity = res.data.humidity
-                            console.log(res.data)
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        })
-                }, 5000)
+                axios.get(path)
+                    .then((res) => {
+                        let data = res.data;
+                        this.dataSensor = data
+
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
 
             },
             relays(relay) {
@@ -451,9 +447,9 @@
                         console.log(err);
                     })
             },
-            async getUser() {
+            getUser() {
                 const path = '/secure/socket_auth';
-                await axios.get(path)
+                axios.get(path)
                     .then((res) => {
                         this.auth = res.data;
                     })
@@ -462,9 +458,9 @@
                     })
             },
 
-            async initialize() {
+            initialize() {
                 const path = 'api/table';
-                await axios.get(path) //ยิงรีเควสไปถามเวิร์ฟเวอร์ 
+                axios.get(path) //ยิงรีเควสไปถามเวิร์ฟเวอร์ 
                     .then((res) => {
                         this.transaction = res.data; //เรียกข้อมูล data ในหน้า blackend มาแสดงที่หน้า fontend
                         this.spinTable = true;

@@ -17,16 +17,18 @@ import pyrebase
 import os
 from datetime import timedelta
 from fastapi.responses import RedirectResponse
+from auth.token_firebase import set_authentication, set_firebase
 
-with open('auth/firebase.json', 'r') as json_file:
-    load_json = json.load(json_file)
-    database = load_json['firebase']
-    authen = load_json['credential']
-    auth_file = credentials.Certificate(authen)
-    firebase_admin.initialize_app(auth_file)
-    pb = pyrebase.initialize_app(database)
-    db = pb.database()
-    
+# with open('auth/firebase.json', 'r') as json_file:
+#     load_json = json.load(json_file)
+#     database = load_json['firebase']
+#     authen = load_json['credential']
+
+auth_file = credentials.Certificate(set_authentication)
+firebase_admin.initialize_app(auth_file)
+pb = pyrebase.initialize_app(set_firebase)
+db = pb.database()
+
 
 pb = pb.auth()
 router = APIRouter()

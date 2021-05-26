@@ -6,10 +6,13 @@ import datetime
 from db import MongoDB
 from object_str import CutId
 from bson import ObjectId
+import os
 
 router = APIRouter()
 
-db = MongoDB(database_name='dashboard', uri='mongodb://127.0.0.1:27017')
+var_mongodb = os.environ.get('MONGODB_URI')
+db = MongoDB(database_name='dashboard', uri=var_mongodb)
+# db = MongoDB(database_name='dashboard', uri='mongodb://127.0.0.1:27017')
 collection = 'users'
 
 

@@ -13,6 +13,8 @@ from fastapi.responses import RedirectResponse
 
 import os
 
+router = APIRouter()
+
 set_firebase = {
     "apiKey": os.environ['apiKey'],
     "authDomain": os.environ['authDomain'],
@@ -21,9 +23,7 @@ set_firebase = {
     "storageBucket": os.environ['storageBucket'],
     "messagingSenderId": os.environ['messagingSenderId'],
     "appId": os.environ['appId'],
-    "measurementId": os.environ['measurementId'],
-    "databaseURL": os.environ['databaseURL']
-
+    "measurementId": os.environ['measurementId']
 }
 
 set_authentication = {
@@ -35,18 +35,26 @@ set_authentication = {
     "client_id": os.environ['client_id'],
     "auth_uri": os.environ['auth_uri'],
     "token_uri": os.environ['token_uri'],
-    "auth_provider_x509_cert_url": os.environ['auth_provider_x500_cert_url'],
+    "auth_provider_x509_cert_url": os.environ['auth_provider_x509_cert_url'],
     "client_x509_cert_url": os.environ['client_x509_cert_url']
 }
 
-auth_file = credentials.Certificate(set_authentication)
-firebase_admin.initialize_app(auth_file)
-pb = pyrebase.initialize_app(set_firebase)
-db = pb.database()
+
+class Config_firebase:
+    def __init__(self, path_db, path_auth):
+        self.path_db = path_db
+        self.path_auth = credentials.Certificate(path_auth)
+        firebase_admin.initialize_app(self.path_auth)
+
+    def authentication(self):
+        firebase = self.path_db
+        pb = pyrebase.initialize_app(firebase).auth()
+        return pb
 
 
-pb = pb.auth()
-router = APIRouter()
+config = Config_firebase(path_db=set_firebase, path_auth=set_authentication)
+pb = config.authentication()
+
 
 @router.post('/register')
 async def register(

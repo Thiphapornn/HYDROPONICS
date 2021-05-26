@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter, Form, Request, UploadFile, File, Response
+from fastapi import APIRouter, Form, Request, UploadFile, File, Response, HTTPException
 from pydantic import BaseModel
 from typing import Optional
 from starlette import responses
@@ -15,42 +15,42 @@ import os
 
 router = APIRouter()
 
-# set_firebase = {
-#     "apiKey": os.environ['apiKey'],
-#     "authDomain": os.environ['authDomain'],
-#     "projectId": os.environ['projectId'],
-#     "databaseURL": os.environ['databaseURL'],
-#     "storageBucket": os.environ['storageBucket'],
-#     "messagingSenderId": os.environ['messagingSenderId'],
-#     "appId": os.environ['appId'],
-#     "measurementId": os.environ['measurementId']
-# }
-
-# set_authentication = {
-#     "type": os.environ['type'],
-#     "project_id": os.environ['project_id'],
-#     "private_key_id": os.environ['private_key_id'],
-#     "private_key": os.environ['private_key'].replace("\\n", "\n"),
-#     "client_email": os.environ['client_email'],
-#     "client_id": os.environ['client_id'],
-#     "auth_uri": os.environ['auth_uri'],
-#     "token_uri": os.environ['token_uri'],
-#     "auth_provider_x509_cert_url": os.environ['auth_provider_x509_cert_url'],
-#     "client_x509_cert_url": os.environ['client_x509_cert_url']
-# }
-
-with open('tam.json', 'r') as jon:
-    set_authentication = json.load(jon)
-
-set_firebase = { "apiKey": "AIzaSyDe5jMDh7VnKnYS4CZ_zVT-6qmvpDtyJF4",
-    "authDomain": "tamja-a01a4.firebaseapp.com",
-    "databaseURL": "https://tamja-a01a4.firebaseio.com",
-    "projectId": "tamja-a01a4",
-    "storageBucket": "tamja-a01a4.appspot.com",
-    "messagingSenderId": "1024091619298",
-    "appId": "1:1024091619298:web:613e29af40a24abdf1c3bb",
-    "measurementId": "G-H7RNK8HTKW"
+set_firebase = {
+    "apiKey": os.environ['apiKey'],
+    "authDomain": os.environ['authDomain'],
+    "projectId": os.environ['projectId'],
+    "databaseURL": os.environ['databaseURL'],
+    "storageBucket": os.environ['storageBucket'],
+    "messagingSenderId": os.environ['messagingSenderId'],
+    "appId": os.environ['appId'],
+    "measurementId": os.environ['measurementId']
 }
+
+set_authentication = {
+    "type": os.environ['type'],
+    "project_id": os.environ['project_id'],
+    "private_key_id": os.environ['private_key_id'],
+    "private_key": os.environ['private_key'].replace("\\n", "\n"),
+    "client_email": os.environ['client_email'],
+    "client_id": os.environ['client_id'],
+    "auth_uri": os.environ['auth_uri'],
+    "token_uri": os.environ['token_uri'],
+    "auth_provider_x509_cert_url": os.environ['auth_provider_x509_cert_url'],
+    "client_x509_cert_url": os.environ['client_x509_cert_url']
+}
+
+# with open('tam.json', 'r') as jon:
+#     set_authentication = json.load(jon)
+
+# set_firebase = { "apiKey": "AIzaSyDe5jMDh7VnKnYS4CZ_zVT-6qmvpDtyJF4",
+#     "authDomain": "tamja-a01a4.firebaseapp.com",
+#     "databaseURL": "https://tamja-a01a4.firebaseio.com",
+#     "projectId": "tamja-a01a4",
+#     "storageBucket": "tamja-a01a4.appspot.com",
+#     "messagingSenderId": "1024091619298",
+#     "appId": "1:1024091619298:web:613e29af40a24abdf1c3bb",
+#     "measurementId": "G-H7RNK8HTKW"
+# }
 class Config_firebase:
     def __init__(self, path_db, path_auth):
         self.path_db = path_db

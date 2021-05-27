@@ -12,8 +12,24 @@
                 <v-app-bar color="#fa5457">
                     <v-avatar>
                         <img src="static/images/2.png" alt="logo">
-                    </v-avatar> &nbsp;&nbsp;
+                    </v-avatar> &nbsp;&nbsp;&nbsp;&nbsp;
                     <v-toolbar-title>Hydroponics IoT</v-toolbar-title>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <v-divider class=mx-4 inset vertical></v-divider>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <v-btn :loading="!spinRelay" @click="relays(1)" rounded color="#01b4bc" large>
+                        เปิดทั้งหมด
+                    </v-btn>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <v-btn :loading="!spinRelay" @click="relays(2)" rounded color="#5fa55a" large>
+                        ปิดทั้งหมด
+                    </v-btn>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <v-btn :loading="!spinRelay" @click="relays(0)" rounded color="#f6d51f" large>
+                        ทำงานอัตโนมัติ
+                    </v-btn>
 
                     <v-spacer></v-spacer>
 
@@ -400,7 +416,7 @@
             this.getUser();
             this.initialize(); //เข้าไปเรียกใช้ฟังก์ชั่น initialize ใน methods
             setInterval(
-                function(){
+                function () {
                     this.sensors();
                 }.bind(this), 3000);
 
@@ -432,6 +448,11 @@
                     .then((res) => {
                         this.spinRelay = true
                         console.log(res.data)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'เรียบร้อย'
+                            
+                        })
                     })
                     .catch((err) => {
                         console.log(err);

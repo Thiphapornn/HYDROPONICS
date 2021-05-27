@@ -125,7 +125,7 @@
                                                                 <v-form v-model="validForgot" ref="formForgot"
                                                                     lazy-validation>
                                                                     <v-text-field v-model="forgotForm"
-                                                                        label="ลืมรหัสผ่าน" required clearable
+                                                                        label="กรอกอีเมล์" required clearable
                                                                         :rules="rules">
                                                                     </v-text-field>
 
@@ -299,11 +299,11 @@
                     const path = '/secure/forgotpassword';
                     axios.post(path, formData)
                         .then((res) => {
-                            Swal.fire(
-                                'Good job!',
-                                'You clicked the button!',
-                                'success'
-                            )
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'แจ้งเตือน!',
+                                text: 'กรุณาเข้าอีเมล์เพื่อทำการเปลี่ยนรหัสผ่าน'
+                            })
                         })
                         .catch((err) => {
                             console.error(err);

@@ -9,8 +9,8 @@ from db import MongoDB
 from random import randint
 from features_line.flex_message import flex_iot
 from routers.secure import db as fb
-from var_environ.token_environ import SECRET_LINE, ACCESS_TOKEN
-# from var_environ.client import SECRET_LINE, ACCESS_TOKEN
+from environ.heroku_environ import SECRET_LINE, ACCESS_TOKEN
+# from environ.client import SECRET_LINE, ACCESS_TOKEN
 
 client = os.environ.get('MONGODB_URI')
 # client = 'mongodb://127.0.0.1:27017'

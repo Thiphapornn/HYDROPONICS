@@ -66,7 +66,7 @@
                                                                         type="password">
                                                                     </v-text-field>
 
-                                                                    <v-btn @click="login" :loading="!spinBtn" rounded
+                                                                    <v-btn :disabled="!validLogin" @click="login" :loading="!spinBtn" rounded
                                                                         color="#5fa55a" large dark>
                                                                         <h6>เข้าสู่ระบบ</h6>
                                                                     </v-btn>
@@ -179,6 +179,7 @@
                 v => /.+@.+\..+/.test(v) || 'กรุณากรอกอีเมล์',
             ],
             rulesimage: [
+                v => !!v || 'กรุณาใส่รูปภาพ',
                 value => !value || value.size < 2000000 || 'ขนาดรูปควรน้อยกว่า 2 MB!',
             ],
             images: [
@@ -221,8 +222,8 @@
         methods: {
             register() {
                 let form = this.$refs.form.validate();
-                this.spinBtn = false
                 if (form === true) {
+                    this.spinBtn = false
                     console.log('success')
                     let formData = new FormData();
                     formData.append('file', this.imgFile);
@@ -254,8 +255,8 @@
             },
             login() {
                 let form = this.$refs.formLogin.validate();
-                this.spinBtn = false
                 if (form === true) {
+                    this.spinBtn = false
                     let formData = new FormData();
                     formData.append('email', this.emailLG)
                     formData.append('password', this.passwordLG)

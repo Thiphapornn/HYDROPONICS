@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Request, HTTPException, Body
-from fastapi import APIRouter, Request, HTTPException, Body
 from typing import Optional
 from linebot import LineBotApi, WebhookHandler, WebhookParser
 from linebot.exceptions import InvalidSignatureError
@@ -9,19 +8,18 @@ import os
 from db import MongoDB
 from random import randint
 from features_line.flex_message import flex_iot
-from routers.secure import db
+from routers.secure import db as fb
 from var_environ.token_environ import SECRET_LINE, ACCESS_TOKEN
+# from var_environ.client import SECRET_LINE, ACCESS_TOKEN
 
-fb = db
-var_mongodb = os.environ.get('MONGODB_URI')
-client = 'mongodb://127.0.0.1:27017'
-db = MongoDB(database_name='dashboard', uri=var_mongodb)
+client = os.environ.get('MONGODB_URI')
+# client = 'mongodb://127.0.0.1:27017'
+db = MongoDB(database_name='dashboard', uri=client)
 collection = 'line_bot'
-
-router = APIRouter()
-
 line_bot_api = LineBotApi(ACCESS_TOKEN)
 handler = WebhookHandler(SECRET_LINE)
+
+router = APIRouter()
 
 
 def get_profile(user_id):

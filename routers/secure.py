@@ -3,10 +3,10 @@ from typing import Optional
 from firebase_admin import auth
 from var_environ.config_db import Config_firebase
 from var_environ.token_environ import set_firebase, set_authentication
+# from var_environ.client import set_firebase, set_authentication
 from datetime import timedelta
 from fastapi.responses import RedirectResponse
 import os
-import json
 
 router = APIRouter()
 

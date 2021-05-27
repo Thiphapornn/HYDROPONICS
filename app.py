@@ -5,8 +5,6 @@ from fastapi.templating import Jinja2Templates
 from routers import table, secure, esp, callback
 from fastapi.responses import RedirectResponse
 from routers.secure import auth
-import time
-
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -26,7 +24,6 @@ app.include_router(
     responses={418: {"description": "I'm a teapot"}},
 )
 
-
 app.include_router(
     esp.router,
     prefix='/esp',
@@ -41,6 +38,7 @@ app.include_router(
     responses={418: {"description": "I'm a teapot"}},
 )
 
+
 @app.get("/dashboard")
 async def dashboard(request: Request):
     token = request.cookies.get('access-token')
@@ -50,14 +48,12 @@ async def dashboard(request: Request):
         try:
             check_session = auth.verify_session_cookie(token)
             auth.revoke_refresh_tokens(check_session['sub'])
-            # pusher_client.trigger('secure', 'session', check_session)
             return template.TemplateResponse('dashboard.html', context={'request': request})
         except auth.RevokedSessionCookieError:
             return RedirectResponse(url='/root_login')
         except auth.InvalidSessionCookieError:
             return RedirectResponse(url='/root_login')
     return template.TemplateResponse("dashboard.html", context={"request": request})
-
 
 
 @app.get('/')
@@ -68,5 +64,3 @@ async def root_login(request: Request):
 
 if __name__ == "__main__":
     uvicorn.run("app:app", port=9191, debug=True)
-
-

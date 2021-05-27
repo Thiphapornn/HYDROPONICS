@@ -11,6 +11,7 @@ import os
 router = APIRouter()
 
 var_mongodb = os.environ.get('MONGODB_URI')
+client = 'mongodb://127.0.0.1:27017'
 db = MongoDB(database_name='dashboard', uri=var_mongodb)
 collection = 'users'
 

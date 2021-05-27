@@ -10,15 +10,14 @@ from db import MongoDB
 from random import randint
 from features_line.flex_message import flex_iot
 from routers.secure import db
+from var_environ.token_environ import SECRET_LINE, ACCESS_TOKEN
 
 fb = db
 var_mongodb = os.environ.get('MONGODB_URI')
+client = 'mongodb://127.0.0.1:27017'
 db = MongoDB(database_name='dashboard', uri=var_mongodb)
-
 collection = 'line_bot'
 
-SECRET_LINE = os.environ['SECRET_LINE']
-ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 router = APIRouter()
 
 line_bot_api = LineBotApi(ACCESS_TOKEN)
@@ -103,8 +102,8 @@ def event_postback(events):
         line_bot_api.reply_message(replyToken, TextSendMessage(text='เปิดไฟแล้วจ้า'))
         line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))
     elif relay == 4 or relay == 6:
-         line_bot_api.reply_message(replyToken, TextSendMessage(text='ปิดไฟแล้วจ้า'))
-         line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))
+        line_bot_api.reply_message(replyToken, TextSendMessage(text='ปิดไฟแล้วจ้า'))
+        line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))
     elif relay == 10 or relay == 8:
         line_bot_api.reply_message(replyToken, TextSendMessage(text='เปิดแล้วจ้า'))
         line_bot_api.push_message(userId, StickerSendMessage(package_id=package_id, sticker_id=str(sticker_id)))

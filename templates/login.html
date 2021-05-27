@@ -235,8 +235,8 @@
                         .then((res) => {
                             this.spinBtn = true
                             Swal.fire(
-                                'Good job!',
-                                'You clicked the button!',
+                                'เรียบร้อย',
+                                'คุณลงทะเบียนสำเร็จแล้ว',
                                 'success'
                             ).then(() => {
                                 this.fe = Object.assign({}, this.feDefault);
@@ -270,8 +270,8 @@
                             else {
                                 this.spinBtn = true
                                 Swal.fire({
-                                    icon: 'error',
-                                    title: '',
+                                    icon: 'info',
+                                    title: 'แจ้งเตือน!',
                                     text: 'กรุณายืนยันอีเมล์ของคุณ'
                                 })
                             }
@@ -281,7 +281,7 @@
                             this.spinBtn = true
                             Swal.fire({
                                 icon: 'error',
-                                title: '',
+                                title: 'ผิดพลาด!',
                                 text: 'คุณกรอกอีเมล์หรือรหัสผ่านไม่ถูกต้อง'
                             })
                         })

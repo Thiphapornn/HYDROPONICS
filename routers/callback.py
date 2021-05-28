@@ -37,7 +37,7 @@ async def webhook(
         request: Request,
         raw_json: Optional[dict] = Body(None)
 ):
-    with open('line_log.json', 'w') as log_line:
+    with open('static/line_log.json', 'w') as log_line:
         json.dump(raw_json, log_line)
     try:
         signature = request.headers['X-Line-Signature']

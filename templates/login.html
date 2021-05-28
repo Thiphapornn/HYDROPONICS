@@ -66,7 +66,7 @@
                                                                         type="password">
                                                                     </v-text-field>
 
-                                                                    <v-btn @click="login" :loading="!spinBtn" rounded
+                                                                    <v-btn :disabled="!validLogin" @click="login" :loading="!spinBtn" rounded
                                                                         color="#5fa55a" large dark>
                                                                         <h6>เข้าสู่ระบบ</h6>
                                                                     </v-btn>
@@ -125,7 +125,7 @@
                                                                 <v-form v-model="validForgot" ref="formForgot"
                                                                     lazy-validation>
                                                                     <v-text-field v-model="forgotForm"
-                                                                        label="ลืมรหัสผ่าน" required clearable
+                                                                        label="กรอกอีเมล์" required clearable
                                                                         :rules="rules">
                                                                     </v-text-field>
 
@@ -179,6 +179,7 @@
                 v => /.+@.+\..+/.test(v) || 'กรุณากรอกอีเมล์',
             ],
             rulesimage: [
+                v => !!v || 'กรุณาใส่รูปภาพ',
                 value => !value || value.size < 2000000 || 'ขนาดรูปควรน้อยกว่า 2 MB!',
             ],
             images: [
@@ -221,8 +222,8 @@
         methods: {
             register() {
                 let form = this.$refs.form.validate();
-                this.spinBtn = false
                 if (form === true) {
+                    this.spinBtn = false
                     console.log('success')
                     let formData = new FormData();
                     formData.append('file', this.imgFile);
@@ -234,8 +235,8 @@
                         .then((res) => {
                             this.spinBtn = true
                             Swal.fire(
-                                'Good job!',
-                                'You clicked the button!',
+                                'เรียบร้อย',
+                                'คุณลงทะเบียนสำเร็จแล้ว',
                                 'success'
                             ).then(() => {
                                 this.fe = Object.assign({}, this.feDefault);
@@ -254,8 +255,8 @@
             },
             login() {
                 let form = this.$refs.formLogin.validate();
-                this.spinBtn = false
                 if (form === true) {
+                    this.spinBtn = false
                     let formData = new FormData();
                     formData.append('email', this.emailLG)
                     formData.append('password', this.passwordLG)
@@ -269,8 +270,8 @@
                             else {
                                 this.spinBtn = true
                                 Swal.fire({
-                                    icon: 'error',
-                                    title: '',
+                                    icon: 'info',
+                                    title: 'แจ้งเตือน!',
                                     text: 'กรุณายืนยันอีเมล์ของคุณ'
                                 })
                             }
@@ -280,7 +281,7 @@
                             this.spinBtn = true
                             Swal.fire({
                                 icon: 'error',
-                                title: '',
+                                title: 'ผิดพลาด!',
                                 text: 'คุณกรอกอีเมล์หรือรหัสผ่านไม่ถูกต้อง'
                             })
                         })
@@ -298,11 +299,11 @@
                     const path = '/secure/forgotpassword';
                     axios.post(path, formData)
                         .then((res) => {
-                            Swal.fire(
-                                'Good job!',
-                                'You clicked the button!',
-                                'success'
-                            )
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'แจ้งเตือน!',
+                                text: 'กรุณาเข้าอีเมล์เพื่อทำการเปลี่ยนรหัสผ่าน'
+                            })
                         })
                         .catch((err) => {
                             console.error(err);

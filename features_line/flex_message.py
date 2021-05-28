@@ -117,7 +117,7 @@ def flex_iot():
                                 {
                                     "type": "button",
                                     "flex": 2,
-                                    "style": "secondary",
+                                    "style": "primary",
                                     "action": {
                                         "type": "postback",
                                         "label": "เปิดน้ำ",
@@ -131,7 +131,7 @@ def flex_iot():
                                         "label": "ปิดน้ำ",
                                         "data": "9"
                                     },
-                                    "style": "secondary"
+                                    "style": "primary"
                                 },
                                 {
                                     "type": "button",
@@ -140,7 +140,7 @@ def flex_iot():
                                         "label": "เปิดละอองน้ำ",
                                         "data": "8"
                                     },
-                                    "style": "secondary"
+                                    "style": "primary"
                                 },
                                 {
                                     "type": "button",
@@ -149,7 +149,7 @@ def flex_iot():
                                         "label": "ปิดละอองน้ำ",
                                         "data": "7"
                                     },
-                                    "style": "secondary"
+                                    "style": "primary"
                                 }
                             ]
                         }

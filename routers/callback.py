@@ -115,7 +115,8 @@ def handler_message(event):
     replyToken = event.reply_token
     message_text = event.message.text
     if message_text == '@sensors':
-        ref = fb.child('smartFarm').child('sensor').get().val()
+        ref = fb.child('smartFarm').child('sensor').get().val() # firebase
+
         text = 'ความชื้นมีค่า : {}\nอุณหภูมิมีค่า : {}\nระดับน้ำมีค่า : {}\n แสงมีค่า : {}'.format(ref['humidity'],
                                                                                                    ref['temperature'],
                                                                                                    ref['level_water'],

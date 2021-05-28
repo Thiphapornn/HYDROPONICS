@@ -1,0 +1,20 @@
+{
+  "destination": "U2b8eccac7257c817069a30e6b1b4c52b",
+  "events": [
+    {
+      "type": "message",
+      "message": {
+        "type": "text",
+        "id": "14130656502591",
+        "text": "@sensors"
+      },
+      "timestamp": 1622216466911,
+      "source": {
+        "type": "user",
+        "userId": "U1780eb9b4c602ad032c4733c64234353"
+      },
+      "replyToken": "afb1be83bed544279a7360c72410c47a",
+      "mode": "active"
+    }
+  ]
+}
